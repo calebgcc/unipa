@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define NUM_OBJ 10
-#define MAX_WEIGHT 90
+#define NUM_OBJ 8
+#define MAX_WEIGHT 10
+#define max(a,b) ((a)>(b) ? (a) : (b) )
 
 
 // S T R U C T
@@ -13,6 +14,9 @@ struct obj{
 };
 
 typedef struct obj Obj;
+
+// P R O T O T I P I
+int bestChoice(Obj *shop, int dim,int weight);
 
 // M A I N
 void main(){
@@ -34,5 +38,22 @@ void main(){
         (i+1)%4 ? 0:printf("\n");
     }
     printf("\n"); 
+
+    printf("Peso Massimo::%d\n",MAX_WEIGHT);
+    printf("Valore raggiugnto::%d\n",bestChoice(shop,NUM_OBJ-1,MAX_WEIGHT));
+
+}
+
+/* * * * bestChoice() * * * *
+ * Trova il miglior compromesso tra valore-peso
+ * */
+int bestChoice(Obj *shop, int dim,int weight){
+
+    if((weight==0)||(dim<0))
+        return 0;
+    return max(
+            bestChoice(shop,dim-1,weight-shop[dim].weight)+shop[dim].value,
+            bestChoice(shop,dim-1,weight)
+        );
 
 }
