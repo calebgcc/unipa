@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define NUM_OBJ 8
-#define MAX_WEIGHT 10
+#define NUM_OBJ 12
+#define MAX_WEIGHT 25
 #define max(a,b) ((a)>(b) ? (a) : (b) )
 
 
@@ -40,7 +40,7 @@ void main(){
     printf("\n"); 
 
     printf("Peso Massimo::%d\n",MAX_WEIGHT);
-    printf("Valore raggiugnto::%d\n",bestChoice(shop,NUM_OBJ-1,MAX_WEIGHT));
+    printf("Valore raggiugnto::%d\n",bestChoice(shop,NUM_OBJ,MAX_WEIGHT));
 
 }
 
@@ -49,10 +49,12 @@ void main(){
  * */
 int bestChoice(Obj *shop, int dim,int weight){
 
-    if((weight==0)||(dim<0))
+    if((weight==0)||(dim==0))
         return 0;
+    if(shop[dim-1].weight>weight)
+        return bestChoice(shop,dim-1,weight);
     return max(
-            bestChoice(shop,dim-1,weight-shop[dim].weight)+shop[dim].value,
+            bestChoice(shop,dim-1,weight-shop[dim-1].weight)+shop[dim-1].value,
             bestChoice(shop,dim-1,weight)
         );
 
