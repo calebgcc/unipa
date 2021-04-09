@@ -29,7 +29,7 @@ void main(){
     // I N I T - S H O P
     srand(time(NULL));
     for(i=0;i<NUM_OBJ;i++){
-        shop[i].value = (rand() % 1000)+1;
+        shop[i].value = (rand() % 100)+1;
         shop[i].weight = (rand() % 15)+1;
     }
 
@@ -49,14 +49,21 @@ void main(){
  * Trova il miglior compromesso tra valore-peso
  * */
 int bestChoice(Obj *shop, int dim,int weight){
+    static int dp[NUM_OBJ][MAX_WEIGHT+1];
 
     if((weight==0)||(dim==0))
         return 0;
-    if(shop[dim-1].weight>weight)
-        return bestChoice(shop,dim-1,weight);
-    return max(
-            bestChoice(shop,dim-1,weight-shop[dim-1].weight)+shop[dim-1].value,
-            bestChoice(shop,dim-1,weight)
-        );
+    if(shop[dim-1].weight>weight){
+        if(dp[dim-1][weight]==0)
+            dp[dim-1][weight] = bestChoice(shop,dim-1,weight);
+        return dp[dim-1][weight];
+    }
+
+    if(dp[dim-1][weight-shop[dim-1].weight]==0)
+        dp[dim-1][weight-shop[dim-1].weight] = bestChoice(shop,dim-1,weight-shop[dim-1].weight)+shop[dim-1].value;
+    if(dp[dim-1][weight]==0)
+        dp[dim-1][weight] = bestChoice(shop,dim-1,weight);
+
+    return max(dp[dim-1][weight-shop[dim-1].weight],dp[dim-1][weight]);
 
 }
