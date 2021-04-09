@@ -7,6 +7,7 @@
 #define max(a,b) ((a)>(b) ? (a) : (b) )
 
 
+
 // S T R U C T
 struct obj{
     int value;
