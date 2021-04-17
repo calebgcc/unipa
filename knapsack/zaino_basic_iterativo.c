@@ -16,10 +16,6 @@ struct obj{
 
 typedef struct obj Obj;
 
-// U T I L I T Y
-int abs(int a){
-    return (a<0) ? ((-1)*a):a;
-}
 
 // M A I N
 void main(){
@@ -43,22 +39,19 @@ void main(){
     printf("\n"); 
 
     // B E S T - C H O I C E
-    int knapsack[2][MAX_WEIGHT+1]; // static così è inizializzato a 0
-    for(i=0;i<NUM_OBJ;i++)
-        for(j=0;j<=MAX_WEIGHT;j++)
-            knapsack[i%2][j]=0;
+    static int knapsack[2][MAX_WEIGHT+1]; // static così è inizializzato a 0
 
     for(i=0;i<NUM_OBJ;i++){
         for(j=0;j<=MAX_WEIGHT;j++){
             if(shop[i].weight>j)
-                knapsack[i%2][j] = knapsack[abs(i-1)%2][j];
+                knapsack[i%2][j] = knapsack[(i+1)%2][j];
             else
-                knapsack[i%2][j] = max(knapsack[abs(i-1)%2][j],shop[i].value+knapsack[abs(i-1)%2][j-shop[i].weight]);
+                knapsack[i%2][j] = max(knapsack[(i+1)%2][j],shop[i].value+knapsack[(i+1)%2][j-shop[i].weight]);
         }
     }
     
     printf("MAX_WEIGHT::%d\n",MAX_WEIGHT);
-    printf("BEST_VALUE::%d\n",knapsack[(NUM_OBJ-1)%2][MAX_WEIGHT]);
+    printf("BEST_VALUE::%d\n",knapsack[(NUM_OBJ+1)%2][MAX_WEIGHT]);
 
 }
 
