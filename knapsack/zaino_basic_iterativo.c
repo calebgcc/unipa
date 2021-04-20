@@ -1,3 +1,7 @@
+/* Risolvere il problema dello zaino
+ * in modo iterativo (bottom-up)
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

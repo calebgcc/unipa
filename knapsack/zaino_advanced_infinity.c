@@ -1,3 +1,8 @@
+/* Risolvere il problema dello zaino
+ * ipotizzando di avere a disposizione 
+ * infinite copie di ogni oggetto
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

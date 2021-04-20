@@ -1,3 +1,7 @@
+/* Risolvere il problema delle zaino
+ * utilizzando una funzione ricorsiva
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
