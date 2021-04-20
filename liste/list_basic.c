@@ -1,3 +1,7 @@
+/* Funzioni base per la creazione di liste
+ * I nodi vengono inseriti ordinati in lista
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 

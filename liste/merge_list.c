@@ -1,3 +1,6 @@
+/* Fare il merge di due liste ordinate
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

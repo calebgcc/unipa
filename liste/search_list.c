@@ -1,3 +1,7 @@
+/* Ricercare un elemento in lista ordinata
+ * si sfrutta il nodo centrale per ottimizzare il tempo di ricerca
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

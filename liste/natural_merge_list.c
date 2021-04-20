@@ -1,3 +1,9 @@
+/* Riordinare una lista
+ * il Natural merge utilizza un array di puntatori a nodi
+ * ongi elemento dell'array ha una sublist ordinata
+ * si utilizza poi la funzione merge per ricreare la lista
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
