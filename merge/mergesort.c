@@ -1,7 +1,11 @@
+/* MergeSort ottimizzato
+ * Per array di dimensione M viene utilizzato InsertionSort
+ * */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define M 30// gli array di 5 elementi saranno ordinati da selection sort
+#define M 30// gli array di 30 elementi saranno ordinati da selection sort
 
 typedef unsigned long long int ull;
 
