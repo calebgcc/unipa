@@ -24,6 +24,7 @@ void printList(Node **head);
 Node *mergeList(Node **sxList,Node **dxList);
 Node *naturalMerge(Node **list);
 void pushNode(Node **head,int value); 
+
 // M A I N
 void main(){
     Node *list = NULL;
