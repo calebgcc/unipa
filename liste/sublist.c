@@ -48,7 +48,8 @@ void main(){
     // L I S T - 2 - A R R A Y
     int vect[len];
     list2array(&head,vect);
-    
+
+
     // M A K E - L I S T - O F - S U B L I S T
     superNode *superHead = sublist(vect,len);
     printSuper(&superHead);
@@ -146,24 +147,13 @@ void list2array(Node **head, int vect[]){
  * linkato ad una sub list della lista originale
  * */
 superNode *sublist(int vect[], int len){
-    superNode *superHead = newSuper(0); // nodo di appoggio
-    superNode *R = NULL; 
-    superNode *superTail = NULL;
-    superNode *superPast = superHead;
-    int i;
+    superNode *superHead = newSuper(-1); // nodo di appoggio/head
+    superNode *R = superHead; // super nodo che contiene una sublist di riferimento
+    superNode *superTail = NULL; // ultimo super nodo aggiunto alla super lista
+    superNode *superPast = superHead; // super nodo precedente
+    int i, pass=0; // pass viene utilizzato per entrare nel ciclo quando R->superLink = NULL
     
-    /* creazione dei primi len nodi,
-    sono i nodi singoli */
-    for(i=0;i<len;i++){
-        superTail = newSuper(i);
-        superTail->link = newNode(vect[i]);
-        superPast->superLink = superTail;
-        superPast = superTail;
-    }
-    R = superHead->superLink; // impostiamo R al primo nodo utile
-    // scorriamo la super lista, per ogni super nodo creiamo nuovi super nodi
-    // contenenti le sub liste che si generano dal super nodo corrente ovvero R
-    while(R->superLink != NULL){
+    while((pass==0)||(R->superLink != NULL)){
         for(i=(R->index)+1;i<len;i++){
             superTail = newSuper(i);
             superTail->link = cpList(&R->link);
@@ -172,8 +162,8 @@ superNode *sublist(int vect[], int len){
             superPast = superTail;
         } 
         R = R->superLink;
+        pass=1;
     }
-
     return superHead;
 }
 
@@ -183,6 +173,11 @@ superNode *sublist(int vect[], int len){
  * ritorna la copia della lista
  * */
 Node *cpList(Node **head){
+    
+    if(*head == NULL){
+        return NULL;
+    }
+
     Node *currentNode = *head;
     Node *cpHead = newNode((*head)->value);
     currentNode = currentNode->link;
