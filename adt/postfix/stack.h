@@ -1,4 +1,4 @@
-
+// INTERFACE - ADT - STACK
 #include "item.h"
 
 void stack_init();

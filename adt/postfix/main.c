@@ -1,3 +1,7 @@
+/* Scrivere un valutore di espressioni postfisse
+ * utilizzando un ADT Stack basato su liste
+ * le espressioni possono contenere le operazione: + - * /
+ * */
 #include <stdio.h>
 #include <string.h>
 #include "item.h"
