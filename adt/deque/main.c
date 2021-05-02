@@ -1,3 +1,7 @@
+/* Realizzare un coda come ADT
+ * utilizzando una lista doppiamente concatenata
+ * affinchè si possa accedere sia dalla testa che della coda
+ * */
 #include <stdio.h>
 #include <stdlib.h>
 #include "item.h"
@@ -12,7 +16,7 @@ void main(){
     deque_init();
 
     do{
-        printf("1: Aggiungi in Coda\n2: Aggiungi in Testa\n3: Rimuovi in Coda\n 4: Rimuovi in testa\n? ");
+        printf("1: Aggiungi in Coda\n2: Aggiungi in Testa\n3: Rimuovi in Coda\n4: Rimuovi in testa\n? ");
         scanf("%d",&scelta);
         switch(scelta){
             case 1:
