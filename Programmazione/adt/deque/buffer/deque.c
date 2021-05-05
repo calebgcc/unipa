@@ -13,10 +13,6 @@ int head,tail; // indici di coda/testa
 // PROTOTIPI STATIC
 static void resize(int toN);
 
-void debug(){
-	printf("*** DIM=%d - HEAD=%d - TAIL =%d *** \n",dim,head,tail);
-}
-
 /* * * * deque_init() * * * *
  * inizializza l'ADT
  * */

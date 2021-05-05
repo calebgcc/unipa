@@ -36,6 +36,5 @@ void main(){
                 printf(":: %d\n",de_top());
             break;
         }
-        debug();
     }while(1);
 }
