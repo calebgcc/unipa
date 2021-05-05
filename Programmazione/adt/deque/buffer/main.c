@@ -1,5 +1,5 @@
 /* Realizzare un coda come ADT
- * utilizzando una lista doppiamente concatenata
+ * utilizzando un array con dimensione variabile e buffer circolare
  * affinchè si possa accedere sia dalla testa che della coda
  * */
 #include <stdio.h>
@@ -36,5 +36,6 @@ void main(){
                 printf(":: %d\n",de_top());
             break;
         }
+        debug();
     }while(1);
 }

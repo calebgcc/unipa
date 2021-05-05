@@ -1,6 +1,7 @@
 // INTERFACE -- DEQUE -- ADT
 #include "item.h"
 
+void debug();
 // PROTOTIPI
 void deque_init();
 void en_tail(Item i);
