@@ -19,6 +19,12 @@ static void add(Node **root,Item i);
 static void inOrder(Node *root);
 static void printLink(int n);
 static void print(Node *root, int liv);
+static void preOrder(Node *root);
+static void postOrder(Node *root);
+static char search(Node *root,Item i);
+static Item min(Node *root);
+static void deleteMin(Node **root);
+
 
 /* * * * init() * * * *
  * inizializzo l'albero
@@ -34,7 +40,8 @@ void treeInit(){
 static Node *newNode(Item i){
     Node *nd =(Node *) malloc(sizeof(Node));
     nd->value=i;
-    nd->dx = nd->sx = NULL;
+    nd->dx = NULL;
+    nd->sx = NULL;
     return nd;
 }
 
@@ -62,27 +69,57 @@ static void add(Node **root, Item i){
     // non aggiungo i duplicati
 }
 
-/* * * * treeInOrder() * * * *
- * interfaccio per l'utente
- * visita dell'albero InOrder
+/* * * * treeVisit() * * * *
+ * interfaccia per l'utente
+ * visita dell'albero InOrder=0 preOrder=1 postOrder=2
  * i valori restituiti sono in ordine crescente;
  * Un nodo non viene visitato se prima non viene visitato il suo
  * sott'albero sinistro, in seguito lui e in seguito il sott'albero destro
  * */
-void treeInOrder(){
-    if(root!=NULL)
-        inOrder(root);
+void treeVisit(char ch){
+    if(root!=NULL){
+        if(ch==0)
+            inOrder(root);
+        else if(ch==1)
+            preOrder(root);
+        else if(ch==2)
+            postOrder(root);
+    }
     printf("\n");
 }
 
 /* * * * inOrder * * * *
- * visita l'albero
+ * visita prima i sotto-alberi sinistri
+ * poi i nodi centrali
+ * poi i sotto-alberi destri
  * */
 static void inOrder(Node *root){
     if(root==NULL) return;
     inOrder(root->sx);
     printf("%d:",root->value);
     inOrder(root->dx);
+}
+
+/* * * * preOrder() * * * *
+ * visita i sotto-alberi sinistri e destri solo dopo
+ * aver visitato il nodo centrale
+ * */
+ static void preOrder(Node *root){
+    if(root==NULL) return;
+    printf("%d:",root->value);
+    preOrder(root->sx);
+    preOrder(root->dx);
+}
+
+/* * * * postOrder() * * * *
+ * visita i sotto-alberi sinistri e destri e solo dopo
+ * visita il nodo centrale
+ * */
+ static void postOrder(Node *root){
+    if(root==NULL) return;
+    preOrder(root->sx);
+    preOrder(root->dx);
+    printf("%d:",root->value);
 }
 
 /* * * * printLink() * * * *
@@ -94,7 +131,8 @@ static void printLink(int n){
     printf("|");
     int i;
     for(i=3;i<(3*n);i++)
-        printf("|");
+        printf(" ");
+    printf("|--");
 }
 
 
@@ -122,21 +160,76 @@ static void print(Node *root, int liv){
 }
 
 
+/* * * * treeSearch() * * * *
+ * interfaccia per l'utente
+ * in input riceve un input da ricercare all'interno dell'albero
+ * ritorna 1 se lo trova 0 altrimenti
+ * */
+ char treeSearch(Item i){
+     if(root!=NULL)
+        return search(root,i);
+    return 0;
+ }
 
+/* * * * search() * * * *
+ * cerca un item specifico in input
+ * */
+ static char search(Node *root,Item i){
+    if(root==NULL) return 0;
+    if(i>root->value)
+        return search(root->dx,i);
+    else if(i<root->value)
+        return search(root->sx,i);
+    else
+        return 1;
+ }
 
-/* * * * - * * * *
+/* * * * treeMin() * * * *
+ * interfaccia per l'utente
+ * ricerca il minimo
+ * */
+ Item treeMin(){
+    if(root!=NULL)
+        return min(root);
+    return NULL_ITEM;
+ }
+
+/* * * * min() * * * *
+ * ricerca del minimo sfruttando
+ * le proprietà dei BST
+ * */
+static Item min(Node *root){
+    if(root->sx==NULL)
+        return root->value;
+    return min(root->sx);
+}
+
+/* * * * treeDeleteMin() * * * *
+ * interfaccia per l'utente
+ * elimina il nodo contente le key minore
+ * */
+ void treeDeleteMin(){
+    if(root!=NULL)
+        deleteMin(&root);        
+ }
+
+ /* * * * deleteMin() * * * *
+ * cancella il minimo nodo
+ * */
+static void deleteMin(Node **root){
+    if((*root)->sx==NULL){
+        Node *tmp = (*root)->dx;
+        free(*root);
+        *root = tmp;
+    }
+    else
+        deleteMin(&((*root)->sx));
+}
+
+ /* * * * - * * * *
  * 
  * */
 
-/* * * * - * * * *
+ /* * * * - * * * *
  * 
  * */
-
-/* * * * - * * * *
- * 
- * */
-
-/* * * * - * * * *
- * 
- * */
-

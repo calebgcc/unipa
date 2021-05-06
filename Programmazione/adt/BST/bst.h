@@ -2,5 +2,8 @@
 
 void treeInit();
 void treeAdd(Item i);
-void treeInOrder();
+void treeVisit(char ch);
 void treePrint();
+char treeSearch(Item i);
+Item treeMin();
+void treeDeleteMin();
