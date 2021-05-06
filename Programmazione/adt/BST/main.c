@@ -5,7 +5,7 @@
 #include <time.h>
 #include "item.h"
 #include "bst.h"
-#define SIZE 20
+#define SIZE 20 // numero di nodi
 
 void main(){
     
