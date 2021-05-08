@@ -7,3 +7,4 @@ void treePrint();
 char treeSearch(Item i);
 Item treeMin();
 void treeDeleteMin();
+void treeDelete(Item i);

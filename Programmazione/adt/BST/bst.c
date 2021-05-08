@@ -15,16 +15,16 @@ typedef struct node Node;
 // VAR - PROTOTIPI
 Node *root;
 static Node *newNode(Item i);
-static void add(Node **root,Item i);
-static void inOrder(Node *root);
+static void add(Node **treeNode,Item i);
+static void inOrder(Node *treeNode);
 static void printLink(int n);
-static void print(Node *root, int liv);
-static void preOrder(Node *root);
-static void postOrder(Node *root);
-static char search(Node *root,Item i);
-static Item min(Node *root);
-static void deleteMin(Node **root);
-
+static void print(Node *treeNode, int liv);
+static void preOrder(Node *treeNode);
+static void postOrder(Node *treeNode);
+static Node *search(Node *treeNode,Item i);
+static Node *min(Node *treeNode);
+static void deleteMin(Node **treeNode);
+static void delete(Node **treeNode, Item i);
 
 /* * * * init() * * * *
  * inizializzo l'albero
@@ -57,15 +57,15 @@ void treeAdd(Item i){
 /* * * * add() * * * *
  * aggiunge un nodo all'albero
  * */
-static void add(Node **root, Item i){
-    if(*root == NULL){
-        *root = newNode(i);
+static void add(Node **treeNode, Item i){
+    if(*treeNode == NULL){
+        *treeNode = newNode(i);
         return;
     }
-    if(i>(*root)->value)
-        add(&(*root)->dx,i);
-    else if(i<(*root)->value)
-        add(&(*root)->sx,i);
+    if(i>(*treeNode)->value)
+        add(&(*treeNode)->dx,i);
+    else if(i<(*treeNode)->value)
+        add(&(*treeNode)->sx,i);
     // non aggiungo i duplicati
 }
 
@@ -93,33 +93,33 @@ void treeVisit(char ch){
  * poi i nodi centrali
  * poi i sotto-alberi destri
  * */
-static void inOrder(Node *root){
-    if(root==NULL) return;
-    inOrder(root->sx);
-    printf("%d:",root->value);
-    inOrder(root->dx);
+static void inOrder(Node *treeNode){
+    if(treeNode==NULL) return;
+    inOrder(treeNode->sx);
+    printf("%d:",treeNode->value);
+    inOrder(treeNode->dx);
 }
 
 /* * * * preOrder() * * * *
  * visita i sotto-alberi sinistri e destri solo dopo
  * aver visitato il nodo centrale
  * */
- static void preOrder(Node *root){
-    if(root==NULL) return;
-    printf("%d:",root->value);
-    preOrder(root->sx);
-    preOrder(root->dx);
+ static void preOrder(Node *treeNode){
+    if(treeNode==NULL) return;
+    printf("%d:",treeNode->value);
+    preOrder(treeNode->sx);
+    preOrder(treeNode->dx);
 }
 
 /* * * * postOrder() * * * *
  * visita i sotto-alberi sinistri e destri e solo dopo
  * visita il nodo centrale
  * */
- static void postOrder(Node *root){
-    if(root==NULL) return;
-    preOrder(root->sx);
-    preOrder(root->dx);
-    printf("%d:",root->value);
+ static void postOrder(Node *treeNode){
+    if(treeNode==NULL) return;
+    preOrder(treeNode->sx);
+    preOrder(treeNode->dx);
+    printf("%d:",treeNode->value);
 }
 
 /* * * * printLink() * * * *
@@ -151,12 +151,12 @@ void treePrint(){
 /* * * * print() * * * *
  * prende in input il nodo radice e il livello
  * */
-static void print(Node *root, int liv){
-    if(root==NULL) return;
-    print(root->dx,liv+1);
+static void print(Node *treeNode, int liv){
+    if(treeNode==NULL) return;
+    print(treeNode->dx,liv+1);
     printLink(liv);
-    printf("(%d)\n",root->value);
-    print(root->sx,liv+1);
+    printf("(%d)\n",treeNode->value);
+    print(treeNode->sx,liv+1);
 }
 
 
@@ -167,21 +167,21 @@ static void print(Node *root, int liv){
  * */
  char treeSearch(Item i){
      if(root!=NULL)
-        return search(root,i);
+        return (search(root,i))!=NULL ? 1:0;
     return 0;
  }
 
 /* * * * search() * * * *
  * cerca un item specifico in input
  * */
- static char search(Node *root,Item i){
-    if(root==NULL) return 0;
-    if(i>root->value)
-        return search(root->dx,i);
-    else if(i<root->value)
-        return search(root->sx,i);
+ static Node *search(Node *treeNode,Item i){
+    if(treeNode==NULL) return NULL;
+    if(i>treeNode->value)
+        return search(treeNode->dx,i);
+    else if(i<treeNode->value)
+        return search(treeNode->sx,i);
     else
-        return 1;
+        return treeNode;
  }
 
 /* * * * treeMin() * * * *
@@ -190,7 +190,7 @@ static void print(Node *root, int liv){
  * */
  Item treeMin(){
     if(root!=NULL)
-        return min(root);
+        return (min(root))->value;
     return NULL_ITEM;
  }
 
@@ -198,10 +198,10 @@ static void print(Node *root, int liv){
  * ricerca del minimo sfruttando
  * le proprietà dei BST
  * */
-static Item min(Node *root){
-    if(root->sx==NULL)
-        return root->value;
-    return min(root->sx);
+static Node *min(Node *treeNode){
+    if(treeNode->sx==NULL)
+        return treeNode;
+    return min(treeNode->sx);
 }
 
 /* * * * treeDeleteMin() * * * *
@@ -216,20 +216,69 @@ static Item min(Node *root){
  /* * * * deleteMin() * * * *
  * cancella il minimo nodo
  * */
-static void deleteMin(Node **root){
-    if((*root)->sx==NULL){
-        Node *tmp = (*root)->dx;
-        free(*root);
-        *root = tmp;
+static void deleteMin(Node **treeNode){
+    if((*treeNode)->sx==NULL){
+        Node *tmp = (*treeNode)->dx;
+        free(*treeNode);
+        *treeNode = tmp;
     }
     else
-        deleteMin(&((*root)->sx));
+        deleteMin(&((*treeNode)->sx));
 }
 
- /* * * * - * * * *
+ /* * * * treeDelete() * * * *
+ * interfaccia per l'utente
+ * cerca un nodo, si cancella il nodo
+ * */
+void treeDelete(Item i){
+    if(root!=NULL)
+        delete(&root,i);
+}
+
+ /* * * * delete() * * * *
+ * elimina un nodo passato in input
+ * */
+ static void delete(Node **treeNode, Item i){
+    if(*treeNode == NULL) return;
+    // FASE DI RICERCA
+    if(i<(*treeNode)->value){
+        delete(&(*treeNode)->sx,i);
+        return;
+    }
+    if(i>(*treeNode)->value){
+        delete(&(*treeNode)->dx,i);
+        return;
+    }
+    // FASE DI ELIMINAZIONE
+    if((*treeNode)->dx==NULL){
+        printf("[A]\n");
+        Node *tmp = (*treeNode)->sx;
+        free(*treeNode);
+        *treeNode = tmp;
+        return;
+    }
+    else if((*treeNode)->sx==NULL){
+        printf("[B]\n");
+        Node *tmp = (*treeNode)->dx;
+        free(*treeNode);
+        *treeNode = tmp;
+        return;
+    }
+    else{
+        printf("[C]\n");
+        (*treeNode)->value = (min((*treeNode)->dx))->value;
+        deleteMin(&((*treeNode)->dx));
+    }
+ }
+
+  /* * * * - * * * *
  *
  * */
 
- /* * * * - * * * *
+  /* * * * - * * * *
+ *
+ * */
+
+  /* * * * - * * * *
  *
  * */
