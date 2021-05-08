@@ -210,7 +210,7 @@ static Item min(Node *root){
  * */
  void treeDeleteMin(){
     if(root!=NULL)
-        deleteMin(&root);        
+      deleteMin(&root);
  }
 
  /* * * * deleteMin() * * * *
@@ -227,9 +227,9 @@ static void deleteMin(Node **root){
 }
 
  /* * * * - * * * *
- * 
+ *
  * */
 
  /* * * * - * * * *
- * 
+ *
  * */
