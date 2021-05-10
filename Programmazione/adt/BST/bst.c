@@ -21,7 +21,7 @@ static void printLink(int n);
 static void print(Node *treeNode, int liv);
 static void preOrder(Node *treeNode);
 static void postOrder(Node *treeNode);
-static Node *search(Node *treeNode,Item i);
+static int search(Node *treeNode,Item i,int liv);
 static Node *min(Node *treeNode);
 static void deleteMin(Node **treeNode);
 static void delete(Node **treeNode, Item i);
@@ -166,23 +166,34 @@ static void print(Node *treeNode, int liv){
  * ritorna 1 se lo trova 0 altrimenti
  * */
  char treeSearch(Item i){
-     if(root!=NULL)
-        return (search(root,i))!=NULL ? 1:0;
+    if(root!=NULL)
+        return search(root,i,1);//(search(root,i,0))==-1 ? 0:1;
     return 0;
  }
 
 /* * * * search() * * * *
  * cerca un item specifico in input
  * */
- static Node *search(Node *treeNode,Item i){
-    if(treeNode==NULL) return NULL;
+ static int search(Node *treeNode,Item i,int liv){
+    if(treeNode==NULL) return -1;
     if(i>treeNode->value)
-        return search(treeNode->dx,i);
+        return search(treeNode->dx,i,liv+1);
     else if(i<treeNode->value)
-        return search(treeNode->sx,i);
+        return search(treeNode->sx,i,liv+1);
     else
-        return treeNode;
+        return liv;
  }
+
+/* * * * treeDistance() * * * *
+ * interfaccia per l'utente
+ * calcola la distanza tra due nodi
+ * */
+int treeDistance(Item i, Item j){
+    if(root!=NULL)
+        return search(root,i,1)+search(root,j,0);
+    return -1;
+}
+
 
 /* * * * treeMin() * * * *
  * interfaccia per l'utente

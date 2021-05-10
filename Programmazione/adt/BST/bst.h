@@ -8,3 +8,4 @@ char treeSearch(Item i);
 Item treeMin();
 void treeDeleteMin();
 void treeDelete(Item i);
+int treeDistance(Item i, Item j);
