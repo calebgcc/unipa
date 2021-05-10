@@ -167,7 +167,7 @@ static void print(Node *treeNode, int liv){
  * */
  char treeSearch(Item i){
     if(root!=NULL)
-        return search(root,i,1);//(search(root,i,0))==-1 ? 0:1;
+        return (search(root,i,0))==-1 ? 0:1;
     return 0;
  }
 
