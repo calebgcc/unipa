@@ -236,7 +236,7 @@ void treeDelete(Item i){
 }
 
  /* * * * delete() * * * *
- * cerca un nodo e successivamente lo elimina
+ * elimina un nodo passato in input
  * */
  static void delete(Node **treeNode, Item i){
     if(*treeNode == NULL) return;
