@@ -34,7 +34,7 @@ void treeInit(){
 }
 
 /* * * * newNode() * * * *
- * in inputp prende un Item
+ * in input prende un Item
  * restituisce un nodo
  * */
 static Node *newNode(Item i){
@@ -72,9 +72,6 @@ static void add(Node **treeNode, Item i){
 /* * * * treeVisit() * * * *
  * interfaccia per l'utente
  * visita dell'albero InOrder=0 preOrder=1 postOrder=2
- * i valori restituiti sono in ordine crescente;
- * Un nodo non viene visitato se prima non viene visitato il suo
- * sott'albero sinistro, in seguito lui e in seguito il sott'albero destro
  * */
 void treeVisit(char ch){
     if(root!=NULL){
@@ -131,7 +128,7 @@ static void printLink(int n){
     printf("|");
     int i;
     for(i=3;i<(3*n);i++)
-        printf(" ");
+        printf(".");
     printf("|--");
 }
 
