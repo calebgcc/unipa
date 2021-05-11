@@ -1,6 +1,7 @@
 // INTERFACE - ADT - BST
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "item.h"
 #include "bst.h"
 
@@ -21,7 +22,7 @@ static void printLink(int n);
 static void print(Node *treeNode, int liv);
 static void preOrder(Node *treeNode);
 static void postOrder(Node *treeNode);
-static int search(Node *treeNode,Item i,int liv);
+static char search(Node *treeNode,Item i,char *str);
 static Node *min(Node *treeNode);
 static void deleteMin(Node **treeNode);
 static void delete(Node **treeNode, Item i);
@@ -163,22 +164,30 @@ static void print(Node *treeNode, int liv){
  * ritorna 1 se lo trova 0 altrimenti
  * */
  char treeSearch(Item i){
-    if(root!=NULL)
-        return (search(root,i,0))==-1 ? 0:1;
-    return 0;
+   char path[50];
+   if(root!=NULL)
+    return (search(root,i,path)) ? 1:0;
+  return 0;
  }
 
 /* * * * search() * * * *
  * cerca un item specifico in input
  * */
- static int search(Node *treeNode,Item i,int liv){
-    if(treeNode==NULL) return -1;
-    if(i>treeNode->value)
-        return search(treeNode->dx,i,liv+1);
-    else if(i<treeNode->value)
-        return search(treeNode->sx,i,liv+1);
-    else
-        return liv;
+ static char search(Node *treeNode,Item i,char *str){
+    if(treeNode==NULL)
+      return 0; // non esiste l'elemento
+    else if(i>treeNode->value){
+      *str = '>';
+      return search(treeNode->dx,i,(str+1));
+    }
+    else if(i<treeNode->value){
+      *str = '<';
+      return search(treeNode->sx,i,(str+1));
+    }
+    else{
+      *str = 0;
+      return 1; // elemento trovato
+    }
  }
 
 /* * * * treeDistance() * * * *
@@ -186,8 +195,15 @@ static void print(Node *treeNode, int liv){
  * calcola la distanza tra due nodi
  * */
 int treeDistance(Item i, Item j){
-    if(root!=NULL)
-        return search(root,i,1)+search(root,j,0);
+    if(root!=NULL){
+      char *iPath = malloc(50*sizeof(char));
+      char *jPath = malloc(50*sizeof(char));
+      search(root,i,iPath);
+      search(root,j,jPath);
+      printf("%s\n%s\n",iPath,jPath);
+      for(;(*iPath)&&(*jPath)&&(*iPath==*jPath);iPath++,jPath++);
+      return strlen(iPath)+strlen(jPath);
+    }
     return -1;
 }
 

@@ -5,7 +5,7 @@
 #include <time.h>
 #include "item.h"
 #include "bst.h"
-#define SIZE 20 // numbers of node
+#define SIZE 10 // numbers of node
 
 int main(){
 
@@ -29,6 +29,15 @@ int main(){
     treePrint();     // and print again tree
     */
     treePrint();
+
+    /* RICERCA NODO
+    Item key;
+    printf("\n[?] Inserisci la key da cercare::");
+    scanf("%d",&key);
+    printf("%d\n",treeSearch(key));
+    */
+
+
     Item a,b;
     printf("Inserisci i due nodi di cui calcolare la distanza::");
     scanf("%d %d",&a,&b);
