@@ -26,7 +26,7 @@ Complex newComplex(double m, double f){
  * passato come parametro
  * */
 void showComplex(Complex C){
-  printf("%.1lf[cos(%.1lf) + isen(%.1lf)]\n",C->m,C->f,C->f);
+  printf("%.1lf+i%.1lf\n",getReal(C),getIm(C));
 }
 
 
@@ -86,7 +86,7 @@ double getIm(Complex C){
    double rt = getReal(A)+getReal(B);
    double it = getIm(A)+getIm(B);
    A->m = sqrt((rt*rt) + (it*it));
-   A->f = atan(rt/it);
+   A->f = atan(it/rt);
  }
 
 
@@ -98,5 +98,22 @@ void subComplex(Complex A, Complex B){
   double rt = getReal(A)-getReal(B);
   double it = getIm(A)-getIm(B);
   A->m = sqrt((rt*rt) + (it*it));
-  A->f = atan(rt/it);
+  A->f = atan(it/rt);
   }
+
+
+/* * * * nrootsComplex(Complex C, int n) * * * *
+ * Ritorna un array di n complessi, ovvero le n radici di C
+ * */
+Complex *nrootsComplex(Complex C, int n){
+  Complex *roots = (Complex *)malloc(n*sizeof(Complex));
+  double mod = pow(abs(C->m),1.0/n);
+  int k;
+  for(k=0;k<n;k++){
+    *(roots+k) =(Complex) malloc(sizeof(struct complex));
+    (*(roots+k))->m = mod;
+    (*(roots+k))->f = (C->f + 2*k*PI)/n;
+  }
+
+  return roots;
+}
