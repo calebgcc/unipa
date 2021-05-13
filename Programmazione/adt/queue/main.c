@@ -2,9 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"
+#include "item.h"
 
 
 int main(){
+    
+    Q myQ = initQ();
+    printf("%p\n",myQ);
 
     return 0;
 }
