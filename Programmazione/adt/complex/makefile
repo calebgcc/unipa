@@ -1,4 +1,4 @@
-# Makefile ADT - Binary Search Tree
+# Makefile ADT - Complex
 
 run : main.o complex.o
 	gcc -o run main.o complex.o -lm
