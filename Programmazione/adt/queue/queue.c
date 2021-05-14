@@ -8,6 +8,8 @@ struct queue{
     FILE *fptr;
     int head;
     int tail;
+    int N;
+    char nameFile[20];
 };
 
 // FUNCTIONS
@@ -16,41 +18,48 @@ struct queue{
  * */
 Q initQ(){
     Q q = (Q) malloc(sizeof(struct queue));
-    q->head = q->tail = 0;
-    q->fptr = fopen("prova","wb+");
-    printf("%p\n",q);
+    q->N = q->head = q->tail = 0;
+    sprintf(q->nameFile,"%p.bin",q);
+    q->fptr = fopen(q->nameFile,"wb+");
+    fclose(q->fptr);
     return q;
 }
 
-/*FILE *fptr = fopen("bella_per_te","wb+");
-    Item data = {13,11,2001};
-    
-    fseek(fptr,4*sizeof(Item),SEEK_SET);
-    fwrite(&data,sizeof(Item),1,fptr);
+/* * * * isEmpty() * * * *
+ * ritorna 1 se la coda è vuota, 0 altrimenti
+ * */
+int isEmpty(Q q){
+    return (q->N==0);
+}
 
-    data.day = 1;
-    data.month = 2;
-    data.year = 1999;
-    fseek(fptr,1*sizeof(Item),SEEK_SET);
-    fwrite(&data,sizeof(Item),1,fptr);
+/* * * * enQ() * * * *
+ * Inserisce una data in Coda
+ * */
+void enQ(Q q, int day,int month,int year){
+    q->fptr = fopen(q->nameFile,"ab");
+    Item data = {day,month,year};
+    fseek(q->fptr,q->tail*sizeof(Item),SEEK_SET);
+    fwrite(&data,sizeof(Item),1,q->fptr);
+    q->tail++;
+    q->N++;
+    fclose(q->fptr);
+}
 
-    data.day = 3;
-    data.month = 7;
-    data.year = 1998;
-    fseek(fptr,sizeof(Item),SEEK_SET);
-    fwrite(&data,sizeof(Item),1,fptr);
-
-    fseek(fptr,0,SEEK_END);
-    int dim = ftell(fptr)/sizeof(Item);
-    Item vet[dim];
-
-    fseek(fptr,0,SEEK_SET);
-    fread(vet,sizeof(Item),dim,fptr);
-
-    for(int i=0;i<dim;i++)
-        printf("%d/%d/%d\n",vet[i].day,vet[i].month,vet[i].year);
-
-
-
-
-    fclose(fptr);*/
+/* * * * deQ() * * * *
+ * Ritorna una data dalla testa della coda
+ * sotto forma di stringa
+ * */
+char *deQ(Q q){
+    if(isEmpty(q))
+        return NULL;
+    Item data;
+    q->fptr = fopen(q->nameFile,"rb");
+    fseek(q->fptr,q->head*sizeof(Item),SEEK_SET);
+    fread(&data,sizeof(Item),1,q->fptr);
+    q->N--;
+    q->head++;
+    char *s =(char *) malloc(20*sizeof(char)); // 00/00/0000 // standard di 10 caratteri // 20 per sicurezza
+    fclose(q->fptr);
+    sprintf(s,"%d/%d/%d",data.day,data.month,data.year);
+    return s;
+}

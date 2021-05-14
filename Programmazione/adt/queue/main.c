@@ -7,8 +7,29 @@
 
 int main(){
     
-    Q myQ = initQ();
-    printf("%p\n",myQ);
+    Q eventi = initQ();
+    Q vacanze = initQ();
+
+    enQ(eventi,7,8,2021);
+    enQ(eventi,8,8,2021);
+
+    enQ(vacanze,10,8,2021);
+    enQ(vacanze,11,8,2021);
+    enQ(vacanze,12,8,2021);
+
+    enQ(eventi,30,8,2021);
+    enQ(eventi,31,8,2021);
+
+    printf("%s\n",deQ(eventi));
+    printf("%s\n",deQ(eventi));
+    printf("%s\n",deQ(eventi));
+    printf("%s\n",deQ(eventi));
+
+    printf("---------------\n");
+
+    printf("%s\n",deQ(vacanze));
+    printf("%s\n",deQ(vacanze));
+    printf("%s\n",deQ(vacanze));
 
     return 0;
 }
