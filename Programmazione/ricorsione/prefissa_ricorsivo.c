@@ -1,4 +1,4 @@
-// Realiazzare un valutatore di espressioni scritte in notazione infissa
+// Realiazzare un valutatore di espressioni scritte in notazione prefissa
 // utilizzare una funzione ricorsiva
 #include <stdio.h>
 #include <stdlib.h>
