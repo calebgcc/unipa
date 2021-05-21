@@ -1,4 +1,5 @@
  @ stampare a video "Hello World!"
+ @ arm-linux-gnueabihf-gcc -g -o0 -static -o Hello HelloWorld.s
  
  .global main
  .type main,%function
