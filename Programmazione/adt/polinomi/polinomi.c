@@ -92,7 +92,71 @@ Node *newNode(double val, int exp){
  * */
 void print(P p){
   Node *temp = p->head;
-  for(;temp->link!=NULL;temp=temp->link)
-    (temp->exp>1) ? printf("%.1lfx^%d + ",temp->val,temp->exp):printf("%.1lf + ",temp->val);
-  (temp->exp>1) ? printf("%.1lfx^%d \n ",temp->val,temp->exp):printf("%.1lf \n",temp->val);
+  for(;temp!=NULL;temp=temp->link){
+    if(temp->exp == 0){
+      if(temp->val == 0)
+        continue;
+      else
+        printf("%.1lf",temp->val);
+    }
+    else if(temp->exp == 1){
+      if(temp->val == 1)
+        printf("x");
+      else
+        printf("%.1lfx",temp->val);
+    }
+    else{
+      if(temp->val == 1)
+        printf("x^%d",temp->exp);
+      else
+        printf("%.1lfx^%d",temp->val,temp->exp);
+    }
+    (temp->link == NULL) ? printf("\n"):printf(" + ");
+  }
+}
+
+/* * * * sumP() * * * *
+ * Somma due polinomi lasciandoli invariati
+ * ritorna un nuovo polinomio
+ * */
+P sumP(P A, P B){
+  Node *a = A->head;
+  Node *b = B->head;
+  P p = (P) malloc(sizeof(struct polinomi));
+  p->grd = (A->grd > B->grd) ? A->grd:B->grd;
+  p->head = newNode(a->val, a->exp);
+  a = a->link;
+  while(a!=NULL || b!=NULL){
+    if(a!=NULL){
+      add(&(p->head),a->val,a->exp);
+      a = a->link;
+    }
+    if(b!=NULL){
+      add(&(p->head),b->val,b->exp);
+      b = b->link;
+    }
+  }
+  return p;
+}
+
+
+/* * * * mulP() * * * *
+ * Moltiplica due polinomi lasciandoli invariati
+ * ritorna un nuovo polinomio
+ * */
+P mulP(P A, P B){
+  Node *a = A->head;
+  Node *b = B->head;
+  P p = (P) malloc(sizeof(struct polinomi));
+  p->grd = A->grd+B->grd;
+  p->head = newNode(0,0);
+  while(a!=NULL){
+    while(b!=NULL){
+      add(&(p->head),a->val*b->val,a->exp+b->exp);
+      b = b->link;
+    }
+    a = a->link;
+    b = B->head;
+  }
+  return p;
 }
