@@ -15,12 +15,14 @@ public class Main{
     // occorrenze di S in T
     public static int contaOccorrenze(String T, String S){
         int count = 0;
-
-        for(int i=0; i<T.length(); ++i){
-            for(int j=i+1; j<=T.length();++j){
-                if(T.substring(i,j).equals(S)) ++count;
+        int l = 0,r;
+        for(r=1; r<T.length(); ++r){
+            if(r-l == S.length()){
+                if(T.substring(l,r).equals(S)) ++count;
+                ++l;
             }
         }
+        if(T.substring(l,r).equals(S)) ++count;
 
         return count;
     }
@@ -28,7 +30,7 @@ public class Main{
     public static void main(String[] args){
             System.out.println(iniziali("Ciao","Miao"));
             System.out.println(reverseString("Una mattina, mi sono alzato, o bella ciao, bella ciao, bella ciao ciao ciao"));
-            System.out.println(contaOccorrenze("Rovere di roveri roventi","ove"));
+            System.out.println(contaOccorrenze("aa aa aaa aaaa","aa"));
     }
 
 }
