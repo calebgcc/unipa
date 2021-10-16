@@ -37,6 +37,16 @@ public class Main {
         return ans;
     }
 
+    public static void eliminaPari(ArrayList<Integer> al){
+        for(int i=0; i<al.size();){
+            if(al.get(i)%2 == 1){
+                al.remove(i);
+            }
+            else
+                ++i;
+        }
+    }
+
     public static int[] eliminaDuplicati(int[] array){
 
         Arrays.sort(array);
@@ -58,6 +68,17 @@ public class Main {
         return vet;
     }
 
+    public static void rimuoviDuplicati(ArrayList<Integer> al){
+        Collections.sort(al);
+        for(int i=1; i<al.size();){
+            if(al.get(i) == al.get(i-1)){
+                al.remove(i);
+            }
+            else
+                ++i;
+        }
+    }
+
 
     public static void main(String[] args){
         
@@ -70,5 +91,19 @@ public class Main {
         
         stampaArray(eliminaDuplicati(vet));
 
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        for(int i=10; i<=19; ++i)
+            al.add(i);
+        al.add(13);
+        al.add(14);
+        al.add(13);
+        al.add(12);
+        al.add(10);
+        
+        eliminaPari(al);
+        System.out.println(al);
+        
+        rimuoviDuplicati(al);
+        System.out.println(al);
     }
 }
