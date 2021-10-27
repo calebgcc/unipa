@@ -15,12 +15,15 @@ public class Quadrilatero {
         this.vertice[2] = c;
         this.vertice[3] = d;
         
-        this.valid = true;
+        this.setValid(true);
 
         this.test();
 
         if(this.isValid()){
             this.calcArea();
+        }
+        else{
+            System.out.println("[!] Non è un quadrilatero valido");
         }
     }
 
@@ -42,29 +45,29 @@ public class Quadrilatero {
     private void test(){
 
         if(vertice[1].isIncluded(vertice[0].getSlope(vertice[2]), vertice[0].getX(), vertice[0].getY())){
-            this.valid = false;
+            this.setValid(false);
             return;
         }
 
         if(vertice[1].isIncluded(vertice[0].getSlope(vertice[3]), vertice[0].getX(), vertice[0].getY())){
-            this.valid = false;
+            this.setValid(false);
             return;
         }
 
         if(vertice[2].isIncluded(vertice[0].getSlope(vertice[3]), vertice[0].getX(), vertice[0].getY())){
-            this.valid = false;
+            this.setValid(false);
             return;
         }
 
         if(vertice[2].isIncluded(vertice[1].getSlope(vertice[3]), vertice[1].getX(), vertice[1].getY())){
-            this.valid = false;
+            this.setValid(false);
             return;
         }
 
     }
 
     public double getArea(){
-        return this.area;
+        return this.isValid() ? this.area:Double.NaN;
     }
 
     public boolean isValid(){
@@ -73,6 +76,10 @@ public class Quadrilatero {
 
     public Punto[] getVertici(){
         return this.vertice;
+    }
+
+    public void setValid(boolean v){
+        this.valid = v;
     }
 
 }
