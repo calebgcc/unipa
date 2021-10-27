@@ -17,7 +17,7 @@ public class Punto {
     }
 
     public double getDistance(Punto p){
-        return Math.sqrt(Math.pow((this.x-p.getX()),2)-Math.pow((this.y-p.getY()),2));
+        return Math.sqrt(Math.pow((this.x-p.getX()),2)+Math.pow((this.y-p.getY()),2));
     }
 
 
@@ -34,6 +34,9 @@ public class Punto {
     }
 
     public boolean isIncluded(double m,double x,double q){
+        if(m == Double.NaN){
+            return this.x == x;
+        }
         return this.y == (m*(this.x-x)+q);
     }
 }

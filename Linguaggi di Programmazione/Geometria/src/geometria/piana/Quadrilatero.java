@@ -14,6 +14,8 @@ public class Quadrilatero {
         this.vertice[1] = b;
         this.vertice[2] = c;
         this.vertice[3] = d;
+        
+        this.valid = true;
 
         this.test();
 
@@ -22,7 +24,19 @@ public class Quadrilatero {
         }
     }
 
+    private double erone(double a, double b, double c){
+        double p = (a+b+c)/2; 
+        return Math.sqrt(p*(p-a)*(p-b)*(p-c));
+    }
+
     private void calcArea(){
+        this.area = Math.min(
+            this.erone(vertice[0].getDistance(vertice[1]),vertice[1].getDistance(vertice[2]),vertice[0].getDistance(vertice[2]))+
+            this.erone(vertice[0].getDistance(vertice[3]),vertice[3].getDistance(vertice[2]),vertice[0].getDistance(vertice[2])),
+            this.erone(vertice[0].getDistance(vertice[1]),vertice[1].getDistance(vertice[3]),vertice[0].getDistance(vertice[3]))+
+            this.erone(vertice[3].getDistance(vertice[1]),vertice[1].getDistance(vertice[2]),vertice[3].getDistance(vertice[2]))
+
+        );
     }
 
     private void test(){
