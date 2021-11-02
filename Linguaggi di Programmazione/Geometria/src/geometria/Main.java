@@ -4,7 +4,8 @@ import geometria.piana.*;
 
 public class Main{
     public static void main(String[] args){
-        Quadrilatero q = new Quadrilatero(new Punto(1,4), new Punto(3,1), new Punto(1,1), new Punto(1,3));
+        Quadrilatero q = new Trapezio(new Punto(1.0,1.0), new Punto(2.0,4.0), new Punto(3.0,2.0), new Punto(3.0,1.0));
+
         System.out.println(q.getArea());
     }
 }

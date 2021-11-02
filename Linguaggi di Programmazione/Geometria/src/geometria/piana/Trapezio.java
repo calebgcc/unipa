@@ -7,9 +7,13 @@ public class Trapezio extends Quadrilatero {
 
     public Trapezio(Punto a,Punto b,Punto c,Punto d){
         super(a,b,c,d);
-        if(this.isValid()){
-            this.test();
-        }
+        this.test();
+    }
+
+
+    private void notValid() {
+        this.setValid(false);
+        throw new RuntimeException();
     }
 
     private void test(){
@@ -24,7 +28,6 @@ public class Trapezio extends Quadrilatero {
             return;
         }
 
-        this.setValid(false);
-        System.out.println("[!] Non è un trapezio valido");
+        notValid();
     }
 }

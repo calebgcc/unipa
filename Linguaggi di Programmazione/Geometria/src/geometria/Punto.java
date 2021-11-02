@@ -29,14 +29,22 @@ public class Punto {
         return 0;
     }
 
+    public static boolean areAligned(Punto a,Punto b, Punto c){
+
+        Double slope = a.getSlope(c);
+
+        if(slope.isNaN()){
+            System.out.println(a.getX() + " - " + b.getX());
+            return a.getX() == b.getX();
+        }
+
+        // the formula is y = slope(x-ax) + ay
+        System.out.println(b.getY() + " " + (slope*(b.getX()-a.getX())+a.getY()));
+        return Math.round(b.getY()) == (slope*(b.getX()-a.getX())+a.getY());
+    }
+
     public double getSlope(Punto p){
         return (this.compareX(p)==0) ? Double.NaN:(this.compareX(p)*((p.getY()-this.y)/(p.getX()-this.x)));
     }
 
-    public boolean isIncluded(double m,double x,double q){
-        if(m == Double.NaN){
-            return this.x == x;
-        }
-        return this.y == (m*(this.x-x)+q);
-    }
 }

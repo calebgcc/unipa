@@ -18,13 +18,7 @@ public class Quadrilatero {
         this.setValid(true);
 
         this.test();
-
-        if(this.isValid()){
-            this.calcArea();
-        }
-        else{
-            System.out.println("[!] Non è un quadrilatero valido");
-        }
+        this.calcArea();
     }
 
     private double erone(double a, double b, double c){
@@ -44,30 +38,28 @@ public class Quadrilatero {
 
     private void test(){
 
-        if(vertice[1].isIncluded(vertice[0].getSlope(vertice[2]), vertice[0].getX(), vertice[0].getY())){
-            this.setValid(false);
-            return;
+        if(Punto.areAligned(vertice[0], vertice[1], vertice[2])){
+            notValid();
         }
-
-        if(vertice[1].isIncluded(vertice[0].getSlope(vertice[3]), vertice[0].getX(), vertice[0].getY())){
-            this.setValid(false);
-            return;
+        else if(Punto.areAligned(vertice[0], vertice[1], vertice[3])){
+            notValid();
         }
-
-        if(vertice[2].isIncluded(vertice[0].getSlope(vertice[3]), vertice[0].getX(), vertice[0].getY())){
-            this.setValid(false);
-            return;
+        else if(Punto.areAligned(vertice[0], vertice[2], vertice[3])){
+            notValid();
         }
-
-        if(vertice[2].isIncluded(vertice[1].getSlope(vertice[3]), vertice[1].getX(), vertice[1].getY())){
-            this.setValid(false);
-            return;
+        else if(Punto.areAligned(vertice[1], vertice[2], vertice[3])){
+            notValid();
         }
 
     }
 
+    private void notValid() {
+        throw new RuntimeException();
+    }
+
     public double getArea(){
-        return this.isValid() ? this.area:Double.NaN;
+        this.setValid(false);
+        return this.area;
     }
 
     public boolean isValid(){
