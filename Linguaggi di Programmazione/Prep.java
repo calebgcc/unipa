@@ -4,8 +4,6 @@ import java.util.*;
 
 public class Prep{
     public static void main(String[] args){
-        
-        System.out.println(Double.parseDouble("10001010"));
 
     }
 }
@@ -71,7 +69,7 @@ public class Prep{
 
     > Charcter.isDigit(char) | Character.isLetter(char) [boolean]
     
-    > Integer.parseInt(string,int) [int] // secondo parametro specifica la base // anche per Byte, Short, Long, Float, Double
+    > Integer.parseInt(string) [int] // anche per Byte, Short, Long, Float, Double
         |
         |_ Integer.toBinaryString(int) | Integer.toHexString(int) | Integer.toOctalString(int) 
 
