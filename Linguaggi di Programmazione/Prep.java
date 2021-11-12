@@ -2,16 +2,26 @@ import java.util.*;
 
 // preparation for the exam
 
+class A{
+    A(){}
+    public void msg(){
+        System.out.println("ciao");
+    }
+}
+
+class B extends A{
+    B(){super.msg();}
+    @Override
+    public void msg(){
+        System.out.println("miao");
+    }
+}
+
+
 public class Prep{
 
     public static void main(String[] args){
-            Integer[] a = new Integer[0];
-            ArrayList<Integer> l = new ArrayList<>();
-
-            l.add(1); l.add(2); l.add(3); l.add(0,4);
-
-            l.toArray(a);
-
+           (new B()).msg();
     }
 
 }
