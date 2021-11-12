@@ -2,28 +2,56 @@ import java.util.*;
 
 // preparation for the exam
 
-class A{
-    A(){}
-    public void msg(){
-        System.out.println("ciao");
-    }
-}
+abstract class Animale{
+    private String categoria;
+    private String spcie;
 
-class B extends A{
-    B(){super.msg();}
+    public Animale(String c, String s){
+        this.categoria = c;
+        this.spcie = s;
+    }
+
     @Override
-    public void msg(){
-        System.out.println("miao");
+    public String toString(){
+        return "Categoria: "+this.categoria+"\nSpecie: "+this.spcie;
     }
+
+    public final String getCategoria(){return this.categoria;}
+    public final String getSpecie(){return this.spcie;}
+
+    public abstract void verso();
+}
+
+class Cane extends Animale{
+    private String razza;
+    private int eta;
+    
+    public Cane(String c, String s, String r, int e){
+        super(c,s);
+        this.razza = r;
+        this.eta = e*7;
+    }
+
+    @Override
+    public String toString(){
+        return "Categoria: "+this.getCategoria()+"\nSpecie: "+this.getSpecie()+"\nRazza: "+this.razza+"\nEtà: "+this.eta;
+    }
+
+    @Override
+    public void verso(){System.out.println("Wof");}
+
 }
 
 
+
+
+// MAIN CLASS
 public class Prep{
-
     public static void main(String[] args){
-           (new B()).msg();
+       Animale bob = new Cane("mammifero","canis lupus familiaris","golden",5);
+       bob.verso();
+       (new C()).metodo();
     }
-
 }
 
 // S T R I N G
@@ -144,7 +172,89 @@ public class Prep{
 
 */
 
+// O B J E C T  &  S U B T Y P I N G  &  P O L I M O R F I S M O 
+/*
 
+    > Object clone()
+    >> deprectato, aiutava a risparmiare memoria
+
+    > boolean equals(Object obj)
+    >> equals richiede una relazione di equivalenza (riflessica,simmetrica,transitiva)
+    >>> di default il metodo equals implementa la relazione di identità
+    |
+    |_ il primo controllo solitamente è if(this == obj) return true; 
+    |_ il secondo è un controllo di sicurezza if(obj == null) return false;
+    |_ controllo sul tipo if(this.getClass() != obj.getClass()) return false;
+    |_ poi si può effettuare un cast esplicito e fare ulteriori controlli sugli statu.
+
+
+    > Class<?> getClass()
+
+    > int hashCode()
+    >> viene solitamente riscritta con combinazioni lineari degli attributi con moltiplicatori primi (29a + 31b + 37c)
+    >> ricorda di riscrivere sempre hashCode quando riscrivi equals
+
+    > String toString()
+    >> di default restituisce this.getClass()+"@"+this.hashCode();
+
+
+    > Nel subtyping definiamo
+    >> Il "dynamic-binding" o "late-binding" ovvero la possibilità di richiamare i metodi della sottoclasse
+    da un riferimento ad oggetto della superclasse (l'oggetto referenziato è della sottoclasse) [polimorfismo di metodi virtuali]
+        |
+        |_ Il controllo sintattico (compiltime) effettuato dalla JVM si chiama "static-type-checking"
+        |_ per bypassare questo tipo di controllo si effettua un cast esplicito
+
+
+    > Il polimorfismo è il principio secondo qui, una stessa espressione può assumere significati diveris
+    > Polimorfismo nei dati: Parametri Polimorfi (es. println) , Collezioni Eterogenee (es. arraylist) , Subtyping
+    > Polimorfismo nei metodi: Overload , Override , Metodi Virtuali
+
+
+
+
+
+*/
+
+// A S T R A T T E  &  I N T E R F A C C E
+/*
+
+    > I metodi abstract non hanno implementazione
+    |
+    |_ una classe che contiene almeno un metodo astratto si dirà astratta (public abstract class Scuola{..})
+    |   |
+    |   |_ una classe astratta non può essere instanziata
+    |
+    |_ i metodi astratti vanno implementati dalle sottoclassi e verranno detti (metodi concreti)
+    |   |
+    |   |_ una classe astratta può avere costruttori (non astratti) che verranno usati dalle sottoclassi
+    |
+    |_ può contenere metodi e attributi static
+
+    DIFFERENZE -- Le classi astratte permettono di definire una gerarchia di ereditarietà (essendo classi)
+    >>>>>>>>>> -- Le interfacce impongono l'implementazione di una lista di metodi indipendenti da gerarchie ereditarie 
+
+    > Interfacce
+    |
+    |_ sono implicitamente (public)
+    |   |
+    |   |_ i suoi metodi sono implicitamente (public abstract)
+    |   |   |
+    |   |   |_ si possono definire metodi con corpi  public default void ciao(){System.out.print("ciao");}
+    |   |       |
+    |   |       |_ nel caso di più metodi default con stessa firma la classe dovrà fare un override del metodo
+    |   |          è possibile richiamare i metodi default originali con la sintassi InterfaceName.super.NameDefaultMethod()
+    |   |
+    |   |_ può contenere anche variabili costanti implicitamente (public static final)
+    |
+    |_ una classe che implementa un interfaccia deve riscriverne tutti i metodi (o dovrà essere abstract)
+    |
+    |_ le interfacce fra loro possono derivarsi con extends (possibilità di extends multipli)
+        |
+        |_ ritorna il diamond-problem, in caso di metdodi duplicati vince sempre la superclasse
+
+
+*/
 
 
 
