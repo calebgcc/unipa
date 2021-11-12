@@ -2,10 +2,28 @@ import java.util.*;
 
 // preparation for the exam
 
-public class Prep{
-    public static void main(String[] args){
-
+class A{
+    A(){}
+    public void msg(){
+        System.out.println("ciao");
     }
+}
+
+class B extends A{
+    B(){super.msg();}
+    @Override
+    public void msg(){
+        System.out.println("miao");
+    }
+}
+
+
+public class Prep{
+
+    public static void main(String[] args){
+           (new B()).msg();
+    }
+
 }
 
 // S T R I N G
@@ -75,9 +93,56 @@ public class Prep{
 
 */
 
+// A R R A Y
+/*
 
+    ------------------
+    int[] n = new int[3]; 
+    int[] n = new int[]{1,2,3}; 
+    int[] n = {1,2,3};
+    ------------------
 
+    > n.length (attributo)
 
+    > varargs : metodo(int... n){} // con foreach si leggono gli argomenti // puoi passare anche un vettore a parametro
+
+    > Arrays.toString([array]) [string]
+
+    > Arrays.equals([array],[array]) [boolean]
+
+    > Arrays.fill([array],[obj]) | Arrays.fill([array],int,int,[obj]) // [start,end)
+
+    > Array.sort([array]) // inplace
+
+    > Array.binarySearch([array],[obj]) [int]
+
+*/
+
+// A R R A Y   L I S T
+/*
+
+   [] Contiene solo riferimenti a oggetti
+
+   > add([obj]) | add(int,[obj])
+
+   > indexOf([obj]) | lastIndexOf([obj]) [int]
+        |
+        |_ remove(int/[obj])
+        |
+        |_ contains([obj]) [boolean]
+
+   > size() [int]
+
+   > get(int) [obj] | set(int,[obj])
+
+   > toArray([array])
+
+   > Collections.sort([alist]) | Collections.reverse([alist]) | Collections.shuffle[alist])
+   > Collections.max([alist]) | Collections.min([alist]) [obj]
+   > Collections.swap([alist],int,int)
+   > Collections.binarySearch([alist],[obj]) [int]
+
+*/
 
 
 
