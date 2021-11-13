@@ -2,7 +2,11 @@ import java.util.*;
 
 // preparation for the exam
 
-abstract class Animale{
+interface Vivente{
+    void verso();
+}
+
+abstract class Animale implements Vivente{
     private String categoria;
     private String spcie;
 
@@ -19,10 +23,9 @@ abstract class Animale{
     public final String getCategoria(){return this.categoria;}
     public final String getSpecie(){return this.spcie;}
 
-    public abstract void verso();
 }
 
-class Cane extends Animale{
+class Cane extends Animale implements Comparable<Cane>{
     private String razza;
     private int eta;
     
@@ -38,21 +41,60 @@ class Cane extends Animale{
     }
 
     @Override
+    public int hashCode(){
+        return 13*this.razza.hashCode()+19*this.eta;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(this.getClass() != o.getClass()) return false;
+        Cane c = (Cane) o;
+        if(this.razza == c.razza && this.eta == c.eta) return true;
+        return false;
+    }
+
+    @Override
+    public int compareTo(Cane c){
+        if(this.equals(c)) return 0;
+        if(this.eta > c.eta) return 1;
+        return -1;
+    }
+
+    @Override
     public void verso(){System.out.println("Wof");}
 
 }
 
 
-
-
 // MAIN CLASS
-public class Prep{
+public class PrimaParte{
     public static void main(String[] args){
-       Animale bob = new Cane("mammifero","canis lupus familiaris","golden",5);
-       bob.verso();
-       (new C()).metodo();
+       ArrayList<Cane> cani = new ArrayList<>();
+
+       String v = "Bau Bau";
+       Cane bob = new Cane("","","dalmata",7){
+           @Override
+           public void verso(){
+               System.out.println(v);
+           }
+       };
+
+       cani.add(new Cane("","","bulldog",8));
+       cani.add(new Cane("","","golden",1));
+       cani.add(new Cane("","","golden",2));
+       cani.add(new Cane("","","golden",1));
+       cani.add(new Cane("","","labrador",7));
+       cani.add(bob);
+
+       Collections.sort(cani);
+       for(Cane c : cani){
+           c.verso();
+       }
     }
 }
+
+
 
 // S T R I N G
 /*
@@ -252,6 +294,13 @@ public class Prep{
     |_ le interfacce fra loro possono derivarsi con extends (possibilità di extends multipli)
         |
         |_ ritorna il diamond-problem, in caso di metdodi duplicati vince sempre la superclasse
+
+    
+    > int compareTo(<T> t)
+        |
+        |_ deve essere compatibile con equals
+        |
+        |_ deve implemtare una relazione d'ordine totale (riflessiva,antisimmetrica,transitiva)
 
 
 */
