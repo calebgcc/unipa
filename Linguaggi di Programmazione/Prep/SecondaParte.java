@@ -2,6 +2,61 @@
 import java.io.*;
 import java.util.*;
 
+class Persona implements Serializable{
+    private String name;
+    private String surname;
+    private String id;
+
+    public Persona(String name, String surname, String id){
+        this.name = name;
+        this.surname = surname;
+        this.id = id;
+    }
+
+    public String getName(){return this.name;}
+    public String getSurname(){return this.surname;}
+    public String getID(){return this.id;}
+
+    @Override
+    public String toString(){
+        return this.name+" "+this.surname+" "+this.id;
+    }
+}
+
+class Coda implements Serializable{
+    private ArrayList<Persona> coda;
+
+    public Coda(){
+        coda = new ArrayList<>();
+    }
+
+    public void add(Persona p){
+        coda.add(p);
+    }
+
+    public void sort(){
+        Collections.sort(coda, new Comparator<Persona>(){
+                @Override
+                public int compare(Persona p, Persona q){
+                    if(p.getID() == q.getID()) return 0;
+                    return p.getID().compareTo(q.getID());
+                }
+        });
+    }
+
+    @Override
+    public String toString(){
+        String out = "";
+        for(Persona p : coda){
+            out += p.toString()+"\n";
+        }
+        return out;
+    }
+
+    public ArrayList<Persona> getCoda(){return this.coda;}
+}
+
+
 public class SecondaParte{
     public static void main(String[] args) throws Exception{
         
@@ -99,6 +154,28 @@ public class SecondaParte{
         in.close();
     */
 
+    // Gestione i/o oggetti
+
+        Coda q = new Coda();
+        q.add(new Persona("John","Wich","abc123"));
+        q.add(new Persona("Habram","Kaggle","ntv687"));
+        q.add(new Persona("Jonathan","Wich Below","abc123"));
+        q.add(new Persona("Natan","Kore","krn002"));
+
+        q.sort();
+
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("myfile"));
+        out.writeObject(q);
+        out.close();
+
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("myfile"));
+        Coda rif = (Coda) in.readObject();
+
+        System.out.println(rif);
+        in.close();
+
+
+        
 
     }
 }
