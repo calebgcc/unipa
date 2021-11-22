@@ -2,6 +2,6 @@ package manager.cassaforte;
 
 public class PasswordsAreDifferentException extends IllegalArgumentException {
     public PasswordsAreDifferentException(){
-        super("Le password non coincidono");
+        super("[x] Le password non coincidono");
     }
 }

@@ -9,7 +9,6 @@ import manager.*;
 public class Cassaforte implements Serializable{
     private String secret;
     private boolean blocked;
-    private boolean open;
     private int tentativi;
     private byte[] password;
 
@@ -20,26 +19,20 @@ public class Cassaforte implements Serializable{
         this.tentativi = 0;
 
         // creazione della password
-        try{
-            Console cns = System.console();
+        Console cns = System.console();
 
-            char[] firstPsw = null; 
-            while(firstPsw==null || firstPsw.length<6){
-                System.out.println("[-] Password di almeno 6 caratteri");
-                firstPsw= cns.readPassword("Password:: ");
-            }
-
-            char[] secondPsw = cns.readPassword("Ripeti Password:: ");
-            if(Arrays.equals(firstPsw,secondPsw)){
-                this.password = hash(Arrays.toString(firstPsw));
-            }
-            else{
-                throw new PasswordsAreDifferentException();
-            }
-            this.open = true; // quando open=true è possibile modificare secretArea
+        char[] firstPsw = null; 
+        while(firstPsw==null || firstPsw.length<6){
+            System.out.println("[-] Password di almeno 6 caratteri");
+            firstPsw= cns.readPassword("Password:: ");
         }
-        catch(PasswordsAreDifferentException e){
-            System.out.println("[!] Le password non corrispondono");
+
+        char[] secondPsw = cns.readPassword("[-] Ripeti Password:: ");
+        if(Arrays.equals(firstPsw,secondPsw)){
+            this.password = hash(Arrays.toString(firstPsw));
+        }
+        else{
+            throw new PasswordsAreDifferentException();
         }
     }
 
@@ -57,13 +50,9 @@ public class Cassaforte implements Serializable{
         return null;
     }
 
-    public void login(){
+    public boolean login(){
         if(this.isBlocked()){
             throw new AppIsBlockedException();
-        }
-        if(this.isOpen()){
-            System.out.println("[*] La cassaforte è aperta");
-            return;
         }
 
         Console cns = System.console();
@@ -72,7 +61,7 @@ public class Cassaforte implements Serializable{
         psw = cns.readPassword("Password:: ");
         if(Arrays.equals(this.password, this.hash(Arrays.toString(psw)))){
             this.tentativi = 0;
-            this.open = true;
+            return true;
         }
         else{
             this.tentativi++;
@@ -80,20 +69,18 @@ public class Cassaforte implements Serializable{
                 this.blocked = true;
                 throw new AppIsBlockedException();
             }
-            else 
-                throw new WrongPasswordException();
+            else{
+                System.out.println("[!] Password Errata");
+                return false;
+            }
         }
-
     }
 
     public void setSecret(){
         if(this.isBlocked()){
             throw new AppIsBlockedException();
         }
-        if(!this.isOpen()){
-            System.out.println("[*] La Cassaforte è chiusa");
-        }
-        else{
+        else if(this.login()){ 
             System.out.println("[-] Inserisci la frase segreta::");
             this.secret = Menu.scan.nextLine();
         }
@@ -103,15 +90,9 @@ public class Cassaforte implements Serializable{
         if(this.isBlocked()){
             throw new AppIsBlockedException();
         }
-        if(!this.isOpen()){
-            System.out.println("[*] La Cassaforte è chiusa");
-            return null;
-        }
-        return this.secret;
-    }
-
-    public boolean isOpen(){
-        return this.open;
+        else if(this.login())
+            return this.secret;
+        return null;
     }
 
     public boolean isBlocked(){
