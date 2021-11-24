@@ -1,6 +1,77 @@
 
 import java.util.*;
 
+class Punto{
+    private double x;
+    private double y;
+
+    public Punto(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public final Double getX(){ return this.x; }
+    public final Double getY(){ return this.y; }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null || !(this.getClass().equals(o.getClass()))) return false;
+        Punto p = (Punto) o;
+        return this.getX().equals(p.getX()) && this.getY().equals(p.getY());
+    }
+
+    @Override
+    public int hashCode(){
+        return (int)(this.getX()*17+this.getY()*37);
+    }
+
+}
+
+class Persona implements Comparable<Persona>{
+    private String nome;
+    private String cognome;
+    private int eta;
+
+    public Persona(String nome, String cognome, int eta){
+        this.nome = nome;
+        this.cognome = cognome;
+        this.eta = eta;
+    }
+
+    public final String getNome(){ return this.nome; }
+    public final String getCognome(){ return this.cognome; }
+    public final int getEta(){ return this.eta; }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null || !(this.getClass().equals(o.getClass()))) return false;
+        Persona p = (Persona) o;
+        return this.getNome().equals(p.getNome()) && this.getCognome().equals(p.getCognome()) && this.getEta()==p.getEta();
+    }
+
+    @Override
+    public int hashCode(){
+        return this.getNome().hashCode()*17+this.getCognome().hashCode()*37+this.getEta()*29;
+    }
+
+    @Override
+    public String toString(){
+        return this.cognome+" "+this.nome+" "+String.valueOf(this.eta);
+    }
+
+    @Override
+    public int compareTo(Persona p){
+        if(this.equals(p)) return 0;
+        if(this.getCognome().equals(p.getCognome()))
+            return this.getNome().compareTo(p.getNome());
+        return this.getCognome().compareTo(p.getCognome());
+    }
+
+
+}
+
 public class Main{
 
     /*
@@ -70,6 +141,19 @@ public class Main{
         }
     }
 
+    // Scrivere un metodo che dato un insieme di punti stampi solo quelli del primo quadrante
+    public static void stampaPrimoQuadrante(Set<Punto> s){
+        for(Punto p : s){
+            if(p.getX() >= 0.0 && p.getY() >= 0.0){
+                System.out.print("("+p.getX()+","+p.getY()+") ");
+            }
+        }
+        System.out.println("");
+    }
+
+    public static TreeSet<Persona> getTreeSet(HashSet<Persona> hs){
+        return (new TreeSet<Persona>(hs));
+    }
 
 
     public static void main(String[] args){
@@ -86,12 +170,28 @@ public class Main{
             isInRangeIt(Set.of(-2,5,6))
         ); // true
 
-
         Set<Integer> s = new HashSet<>();
         s.add(2); s.add(3); s.add(5); s.add(6); s.add(7);
         eliminaPari(s);
         System.out.println(s);
 
+        stampaPrimoQuadrante(Set.of(
+            new Punto(2.0,1.0),
+            new Punto(-1.5,-2.4),
+            new Punto(2.0,-1.0),
+            new Punto(3.6,7.3),
+            new Punto(-3.2,1.0)
+        ));
+
+
+        HashSet<Persona> hs = new HashSet<>();
+        hs.add(new Persona("Alex","",14));
+        hs.add(new Persona("X","Y",10));
+        hs.add(new Persona("Pablo","Picasso",66));
+        hs.add(new Persona("Alex","",14)); // duplicato che non verrà aggiunto
+
+        System.out.println(hs);
+        System.out.println(getTreeSet(hs));
 
     }
 }
