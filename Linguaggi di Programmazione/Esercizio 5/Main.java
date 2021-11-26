@@ -155,6 +155,54 @@ public class Main{
         return (new TreeSet<Persona>(hs));
     }
 
+    // Scrivere un programma che generi un migliaio di numeri interi casuali nell’intervallo [0,9],
+    // e mostri la frequenza con cui gli interi appaiono
+    public static void showFrequency(int nTest){
+        Random random = new Random();
+        Map<Integer,Integer> map = new HashMap<>();
+        int randomNumber;
+
+        for(int i=0; i<nTest; ++i){
+            randomNumber = random.nextInt(10);
+            if(map.containsKey(randomNumber))
+                map.put(randomNumber,map.get(randomNumber)+1);
+            else
+                map.put(randomNumber,1);
+        }
+
+        for(Map.Entry<Integer,Integer> pair : map.entrySet()){
+            System.out.print("["+pair.getKey()+" | "+(double)pair.getValue()/nTest+"] ");
+        }
+        System.out.println("");
+
+    }
+
+    // Scrivere un metodo che prende a parametro una lista generica 
+    // e restituisce una mappa che a ogni elemento della lista associa il suo codice hash
+    public static <T extends Object> Map<Integer,T> listToMap(List<T> list){
+        Map<Integer,T> map = new HashMap<>();
+        for(T t : list){
+            map.put(t.hashCode(),t);
+        }
+        return map;
+    }
+
+    // Scrivere un metodo che prende a parametro una mappa generica 
+    // e restituisce un riferimento alla chiave con valore massimo nella mappa
+    public static <K extends Object, V extends Comparable<? super V>> K maxValueMap(Map<K,V> map){
+        Map.Entry<K,V> maxUntilNow = null;
+        for(Map.Entry<K,V> pair : map.entrySet()){
+            if(maxUntilNow == null){
+                maxUntilNow = pair;
+            }
+            else{
+                if(pair.getValue().compareTo(maxUntilNow.getValue()) > 0)
+                    maxUntilNow = pair;
+            }
+        }
+        return (maxUntilNow != null ? maxUntilNow.getKey():null);
+    }
+
 
     public static void main(String[] args){
 
@@ -192,6 +240,20 @@ public class Main{
 
         System.out.println(hs);
         System.out.println(getTreeSet(hs));
+
+        showFrequency(1000);
+
+        System.out.println(listToMap(
+            List.of("caleb","gucciardi","ciao","miao")
+        ));
+
+        System.out.println(
+            maxValueMap(
+                listToMap(
+                    List.of("caleb","gucciardi","ciao","miao")
+                )
+            )
+        );
 
     }
 }
