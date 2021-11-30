@@ -1,9 +1,11 @@
+package main;
+
 import java.util.*;
 import java.util.function.Predicate;
 
 public class Main{
 
-    // teste delle interfacce funzionali
+    // test delle interfacce funzionali
     public static boolean test(Integer num, Predicate<Integer> property){
         return property.test(num);
     }
@@ -16,6 +18,7 @@ public class Main{
             test(5,i -> i%2==0)
         );
 
+        // confronto usando comparing e thenComparing
         List<Dog> list = new LinkedList<>();
         list.add(new Dog("fido",7)); list.add(new Dog("zatura",3));
         list.add(new Dog("terminator",7)); list.add(new Dog("zatura",1));
@@ -27,8 +30,10 @@ public class Main{
 
         System.out.println(list);
 
-        
-
+        // Esempi Stream
+        EsempioStream.esForEach();
+        EsempioStream.esPrimitiveStream();
+        EsempioStream.esRandom();
     }
 }
 
