@@ -44,4 +44,67 @@ public class EsempioStream{
         new Random().ints(1,7).limit(10).forEach(i -> System.out.print(i + " * "));
         System.out.println("");
     }
+
+
+    // esempio con filter
+    public static void esFilter(String ...vet){
+        Arrays.stream(vet)
+        .filter(s -> s.length()>2)
+        .forEach(s -> System.out.print(s + " - "));
+        System.out.println("");
+    }
+
+     // esempio con map
+     // mapToInt mapToDouble mapToLong se map dovesse ritornare tipi primitivi
+     public static void esMap(String ...vet){
+        Arrays.stream(vet)
+        .map(s -> s.toUpperCase())
+        .forEach(s -> System.out.print(s + " : "));
+        System.out.println("");
+    }
+
+    // es flatMap
+    public static void esFlatMap(){
+        List<List<Integer>> list = List.of(
+            List.of(1,2,3),
+            List.of(4,5,6),
+            List.of(7,8,9),
+            List.of(0)
+        );
+
+        list.stream()
+        .flatMap(l -> l.stream())
+        .forEach(i -> System.out.print(i + " . "));
+        System.out.println("");
+    }
+
+    // es limit and skip
+    // Stream.iterate crea uno stream infinito
+    public static void esLimitSkip(){
+        Stream.iterate(1, i -> i*2)
+        .skip(10)
+        .limit(5)
+        .forEach(i -> System.out.print(i + " ° "));
+        System.out.println("");
+    }
+
+    // es distinct utilizza equals
+    public static void esDistinct(String ...vet){
+        Arrays.stream(vet)
+        .distinct()
+        .forEach(i -> System.out.print(i + " | "));
+        System.out.println("");
+    }
+
+    // Il metodo takeWhile restituisce lo stream ottenuto fino a quando è verificata la condizione
+    // Il metodo dropWhile restituisce lo stream ottenuto a partire da quando non è più verificata la condizione
+    // es takeWhile
+    public static void esWhile(){
+        Stream.iterate(0,i -> i+2)
+        .takeWhile(i -> i < 12)
+        .dropWhile(i -> i < 6)
+        .forEach(i -> System.out.print(i + " = "));
+        System.out.println("");
+    }
+
 }

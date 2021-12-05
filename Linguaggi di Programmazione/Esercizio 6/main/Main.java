@@ -34,6 +34,12 @@ public class Main{
         EsempioStream.esForEach();
         EsempioStream.esPrimitiveStream();
         EsempioStream.esRandom();
+        EsempioStream.esFilter("Io","sto","facendo","un","esempio");
+        EsempioStream.esMap("un","altro","esempio");
+        EsempioStream.esFlatMap();
+        EsempioStream.esLimitSkip();
+        EsempioStream.esDistinct("Ciao","ciao","Ciao","miao","miao","caffè");
+        EsempioStream.esWhile();
     }
 }
 
