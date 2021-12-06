@@ -107,4 +107,44 @@ public class EsempioStream{
         System.out.println("");
     }
 
+    // es sorted
+    public static void esSorted(String ...vet){
+        Arrays.stream(vet)
+        .sorted((a,b) -> a.length()-b.length())
+        .forEach(s -> System.out.print(s + " "));
+        System.out.println("");
+    }
+
+    // es peek e toArray()
+    public static void esPeek(){
+        Integer[] vet = Stream.of("a","ab","abba","abbabba","abbaa","aaabbb")
+        .filter(s -> {
+            int a = 0, b = 0;
+            for(int i=0; i<s.length(); ++i){
+                if(s.charAt(i)=='a') ++a;
+                else ++b;
+            }
+            return a==b;
+        })
+        .peek(s -> System.out.print(s + " * "))
+        .map(s -> s.length())
+        .sorted((a,b) -> a.compareTo(b)*(-1))
+        .toArray(Integer[]::new); // terminale
+        System.out.println(Arrays.toString(vet));
+    }
+
+    // es Optional e max/min
+    public static void esOptional(String ...vet){
+        Optional<String> longest = Arrays.stream(vet).max(Comparator.comparing(String::length));
+        longest.ifPresent(s -> System.out.print(s + " - "));
+        Optional<String> smallest = Arrays.stream(vet).min(Comparator.comparing(String::length));
+        smallest.ifPresent(s -> System.out.println(s));
+    }
+
+    // es anyMatch noneMatch allMatch
+    public static void esMatch(){
+        System.out.print(Stream.of(1,2,4,8,16,32).allMatch(n->n%2==0)+" ");
+        System.out.print(Stream.of(1,2,4,8,16,32).anyMatch(n->n%2==0)+" ");
+        System.out.println(Stream.of(1,2,4,8,16,32).noneMatch(n->n%2==0));
+    }
 }

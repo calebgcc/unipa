@@ -31,15 +31,19 @@ public class Main{
         System.out.println(list);
 
         // Esempi Stream
-        EsempioStream.esForEach();
-        EsempioStream.esPrimitiveStream();
-        EsempioStream.esRandom();
-        EsempioStream.esFilter("Io","sto","facendo","un","esempio");
-        EsempioStream.esMap("un","altro","esempio");
-        EsempioStream.esFlatMap();
-        EsempioStream.esLimitSkip();
-        EsempioStream.esDistinct("Ciao","ciao","Ciao","miao","miao","caffè");
-        EsempioStream.esWhile();
+        // EsempioStream.esForEach();
+        // EsempioStream.esPrimitiveStream();
+        // EsempioStream.esRandom();
+        // EsempioStream.esFilter("Io","sto","facendo","un","esempio");
+        // EsempioStream.esMap("un","altro","esempio");
+        // EsempioStream.esFlatMap();
+        // EsempioStream.esLimitSkip();
+        // EsempioStream.esDistinct("Ciao","ciao","Ciao","miao","miao","caffè");
+        // EsempioStream.esWhile();
+        // EsempioStream.esSorted("cane","gatto","ordine","a","un","per");
+        EsempioStream.esPeek();
+        EsempioStream.esOptional("1","333","22","4444");
+        EsempioStream.esMatch();
     }
 }
 
