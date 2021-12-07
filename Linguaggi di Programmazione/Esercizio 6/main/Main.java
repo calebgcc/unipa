@@ -44,6 +44,10 @@ public class Main{
         EsempioStream.esPeek();
         EsempioStream.esOptional("1","333","22","4444");
         EsempioStream.esMatch();
+        EsempioStream.esFind();
+        EsempioStream.esReduce();
+        EsempioStream.esStatistics();
+        EsempioStream.esCollect();
     }
 }
 

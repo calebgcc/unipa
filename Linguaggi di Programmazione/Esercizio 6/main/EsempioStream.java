@@ -147,4 +147,71 @@ public class EsempioStream{
         System.out.print(Stream.of(1,2,4,8,16,32).anyMatch(n->n%2==0)+" ");
         System.out.println(Stream.of(1,2,4,8,16,32).noneMatch(n->n%2==0));
     }
+
+    // es findFirst / findAny
+    // restituiscono il primo (rispettivamente uno qualunque) sotto forma di Optional
+    public static void esFind(){
+        Optional<Integer> g = Stream.of(2,6,4,3,1,0,9)
+        .filter(i -> i%2==1)
+        .sorted((a,b) -> a.compareTo(b))
+        .findAny(); // .findFirst();
+        if(g.isPresent())
+            System.out.println("find:: "+g.get());
+    }
+
+    // es reduce
+    public static void esReduce(){
+        int i = Stream.of(1,2,3)
+                .reduce(0,(a,b)->a+b); // lo zero raprresentà l'identity value nel caso lo stream fosse vuote
+        System.out.println("reduce:: "+i); // se non si inserisci l'identity lo stream restituisce un Optional
+    }
+
+    // es summaryStatistics
+    public static void esStatistics(){
+        System.out.println(
+            Stream.of(1,2,3)
+            .mapToInt(i -> (int)i)
+            .summaryStatistics() // funziona per stream di interi, long e double
+            // getSum() getMax() getMin() getCount()
+        );  // se aggiungi .get... ottieni solo la statistica che ti interessa
+    }
+
+
+    // es collect
+    public static void esCollect(){
+        // Collect<T,A,R> Tipo, Accumulatore,Risultato
+        Set<String> s = Stream.of("ciao","ciao","collect",":)").collect(Collectors.toSet());
+        // esistono anche toList(), toMap(), toCollection()
+
+        // toList() e toSet() non hanno parametri
+        // toCollection() prende a parametro un supplier
+        List<Integer> l = Stream.of(1,1,2,3,5).collect(Collectors.toCollection(LinkedList::new));
+
+        // toMap() prende due parametri, una funzione per creare le chiavi, e una per i valori
+        Map<String,Integer> m1 = Stream.of("a","a","aa","aaa")
+                                .distinct()
+                                .collect(
+                                    Collectors.toMap(
+                                        w->w, 
+                                        w->w.length()
+                                    )
+                                );
+        // per toMap() vi sono anche due overloading
+        // il primo prende a parametro una terza funzioni che descrive cosa fare con i duplicati
+        Map<String,Integer> m2 = Stream.of("a","a","aa","aaa")
+                                .collect(
+                                    Collectors.toMap(
+                                        w->w, 
+                                        w->w.length(),
+                                        (e,r) -> r // esistente/rimpiazzo
+                                    )
+                                );
+        // l'altro overloading aggiunge una funzione per esistente/rimpazio ed in più un supplier
+
+        // inoltre prima di .collect() dovremo aggiugnere un .boxed() se lo stream è di primitivi
+
+        System.out.println(m2);
+    }
+
+
 }
