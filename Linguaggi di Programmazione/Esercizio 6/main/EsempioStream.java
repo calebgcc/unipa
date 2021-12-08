@@ -209,9 +209,47 @@ public class EsempioStream{
         // l'altro overloading aggiunge una funzione per esistente/rimpazio ed in più un supplier
 
         // inoltre prima di .collect() dovremo aggiugnere un .boxed() se lo stream è di primitivi
-
+        // esistono anche i metodi toUnmodifiableMap()/Set()/List()
         System.out.println(m2);
     }
 
+
+    // es partitioningBy
+    public static void esPartitioning(){
+        // partiziona uno stream in una mappa Map<Boolean, List<T>>
+        // dato un predicato crea due liste, una per cui è false, una per cui true
+        Map<Boolean,List<Integer>> a = Stream.of(1,2,3,4,5,6,7,8,9,0)
+                                       .collect(Collectors.partitioningBy(s -> s%2==0));
+
+        // spesso counting viene usato insieme a partitioning, che ritorna quanti rientrano in una categoria   
+        Map<Boolean,Long> b = Stream.of(1,2,3,4,5,6,7,8,9,0)
+                            .collect(Collectors.partitioningBy(s -> s%2==0,Collectors.counting()));
+        System.out.println(b);
+    }
+
+    // es groupingBy
+    public static void esGrouping(){
+        // ragruppa per chiavi, la creazione delle chiavi è data da una funzione
+        Map<Integer,List<String>> m1 = Stream.of("ciao","miao","cacao","un","il")
+                                      .collect(Collectors.groupingBy(
+                                          s -> s.length()
+                                      ));
+
+        // possiamo definire il tipo di Collezione conterrà i valori passando un Collettore
+        Map<Integer,TreeSet<String>> m2 = Stream.of("ciao","miao","cacao","un","il")
+                                      .collect(Collectors.groupingBy(
+                                          s -> s.length(),
+                                          Collectors.toCollection(TreeSet::new)
+                                      ));
+
+        // o ancora possiamo passare un Supplier per definire una mappa specifica
+        TreeMap<Integer,ArrayList<String>> m3 = Stream.of("ciao","miao","cacao","un","il")
+                                      .collect(Collectors.groupingBy(
+                                          s -> s.length(),
+                                          TreeMap::new,
+                                          Collectors.toCollection(ArrayList::new)
+                                      ));
+        System.out.println(m3);
+    }
 
 }

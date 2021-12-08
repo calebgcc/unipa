@@ -48,6 +48,8 @@ public class Main{
         EsempioStream.esReduce();
         EsempioStream.esStatistics();
         EsempioStream.esCollect();
+        EsempioStream.esPartitioning();
+        EsempioStream.esGrouping();
     }
 }
 
