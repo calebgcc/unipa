@@ -1,2 +1,2 @@
 # Workspace
-Hola
+Coding exercises
