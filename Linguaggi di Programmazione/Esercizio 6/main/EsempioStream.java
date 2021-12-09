@@ -252,4 +252,55 @@ public class EsempioStream{
         System.out.println(m3);
     }
 
+    // es joining
+    // concatena uno stream di STRINGHE
+    // internamente usa uno StringBuilder
+    public static void esJoining(){
+        String res = Stream.of(3,4,2,8,3,6,4,5,1,9)
+                        .map(String::valueOf)
+                        .collect(Collectors.joining("-")); // si passa il (delimiter,start,end)
+        System.out.println(res);
+    }
+
+    // esistono anche mapping, flatMapping, filtering
+    // prendono a parametro un altro collettore detto downstream-collector
+    // sono un analogo delle operazioni intermedie per gli string
+    public static void esMFF(){ // mapping flatmapping filtering
+        Map<Character,Set<String>> m1 = Stream.of("io","mi","chiamo","caleb")
+                                        .collect(
+                                            Collectors.groupingBy(
+                                                w -> w.charAt(0),
+                                                Collectors.mapping( // applico una funzione agli elementi 
+                                                    w -> new StringBuilder(w).reverse().toString(),
+                                                    Collectors.toSet()
+                                                )
+                                            )
+                                        );
+
+        Map<Character,List<String>> m2 = Stream.of("io","mi","chiamo","caleb")
+                                        .collect(
+                                            Collectors.groupingBy(
+                                                w -> w.charAt(0),
+                                                Collectors.flatMapping( // applico una funzione agli elementi 
+                                                    w -> Arrays.stream(w.split("")),
+                                                    Collectors.toList()
+                                                )
+                                            )
+                                        );
+
+    
+        Map<Character,List<String>> m3 = Stream.of("io","mi","chiamo","caleb")
+                                        .collect(
+                                            Collectors.groupingBy(
+                                                w -> w.charAt(0),
+                                                Collectors.filtering( // applico una funzione agli elementi 
+                                                    w -> w.length()>2,
+                                                    Collectors.toList()
+                                                )
+                                            )
+                                        );
+
+        System.out.println(m3);
+    } 
+
 }

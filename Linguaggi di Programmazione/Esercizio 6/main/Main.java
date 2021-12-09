@@ -50,6 +50,8 @@ public class Main{
         EsempioStream.esCollect();
         EsempioStream.esPartitioning();
         EsempioStream.esGrouping();
+        EsempioStream.esJoining();
+        EsempioStream.esMFF();
     }
 }
 
