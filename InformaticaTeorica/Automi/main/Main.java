@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Set;
+
 public class Main {
     public static void main(String[] args){
         
@@ -15,15 +17,37 @@ public class Main {
         DFA.isAccepted(q[0], "10110010");
 
         // DFA che riconosce L = { {a,b,c}* : dopo ogni 'a' vi sia 'bb' }
-        DFA uno = new DFA("q",true,true);
-        DFA due = new DFA("t");
-        DFA tre = new DFA("r");
 
-        uno.link('b',uno); uno.link('c',uno); uno.link('a',due);
-        due.link('b',tre);
-        tre.link('b',uno);
+        DFA[] g = {
+            new DFA("q",true,true),
+            new DFA("t"),
+            new DFA("r")
+        };
 
-        DFA.isAccepted(uno,"bccabb",true);
+        g[0].link('b',g[0]); g[0].link('c',g[0]); g[0].link('a',g[1]);
+        g[1].link('b',g[2]);
+        g[2].link('b',g[0]);
+
+        DFA.isAccepted(g[0],"abccabb",true);
         
+
+        // NFA che riconosce L = { {a,b,c}*abc } // le stringhe formate da (a,b,c) che terminano con "abc"
+
+        NFA[] grafo = {
+            new NFA("i",true,false),
+            new NFA("a"),
+            new NFA("b"),
+            new NFA("c",false,true)
+        };
+
+        grafo[0].link('a',grafo[0],grafo[1]); grafo[0].link('b',grafo[0]); grafo[0].link('c',grafo[0]);
+        grafo[1].link('b',grafo[2]);
+        grafo[2].link('c',grafo[3]);
+
+        System.out.println(
+            NFA.isAccepted(Set.of(grafo[0]), "abcc")
+        );
+
+
     }
 }
