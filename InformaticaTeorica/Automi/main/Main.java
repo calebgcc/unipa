@@ -14,7 +14,7 @@ public class Main {
         q[0].link('0', q[1]); q[0].link('1', q[0]);
         q[1].link('0', q[0]); q[1].link('1', q[1]);
 
-        DFA.isAccepted(q[0], "10110010");
+        DFA.isAccepted(q[0], "10110010"); // return true
 
         // DFA che riconosce L = { {a,b,c}* : dopo ogni 'a' vi sia 'bb' }
 
