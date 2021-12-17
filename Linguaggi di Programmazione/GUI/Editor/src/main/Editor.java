@@ -103,7 +103,7 @@ public class Editor extends JFrame{
             BufferedReader in = new BufferedReader(new FileReader(file));
 
             this.current = file; // così che possa salvare
-            this.setTitle(file.getAbsolutePath()+" (not saved)");
+            this.setTitle(file.getAbsolutePath()+" (*)");
 
             String line;
             while((line = in.readLine()) != null)
