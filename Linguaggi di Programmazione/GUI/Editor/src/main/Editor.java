@@ -77,6 +77,12 @@ public class Editor extends JFrame{
             }
         });
 
+        nuovo.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ev){
+                    newFile();
+            }
+        });
+
         menuFile.add(nuovo);
         menuFile.add(save);
         menuFile.add(open);
@@ -129,6 +135,28 @@ public class Editor extends JFrame{
             catch(IOException e){
                 JOptionPane.showMessageDialog(new JFrame(), "Errore salvataggio File", "Dialog",JOptionPane.ERROR_MESSAGE);
             }
+        }
+        else{
+            //int result = fileChooser.showOpenDialog(null);
+            int result = fileChooser.showSaveDialog(null);
+            if(result == JFileChooser.APPROVE_OPTION){
+                this.current = fileChooser.getSelectedFile();
+                saveFile();
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "Errore salvataggio File", "Dialog",JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
+
+    private void newFile(){
+        if(this.current == null){
+            
+        }
+        else{
+            String message = "Salvare le modifiche per"+this.current.getAbsolutePath()+" ?";
+            int result = JOptionPane.showConfirmDialog((Component) null,message,"Alert", JOptionPane.YES_NO_CANCEL_OPTION);
         }
     }
 }
