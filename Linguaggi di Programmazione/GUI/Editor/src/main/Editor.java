@@ -28,11 +28,15 @@ public class Editor extends JFrame{
     private final JMenuItem open = new JMenuItem("open file");
     private final JMenuItem nuovo = new JMenuItem("new file");
     //----
-    
+    private final JMenuItem dark = new JMenuItem("dark");
+    private final JMenuItem light = new JMenuItem("light");
+    private final JMenuItem sepia = new JMenuItem("sepia");
+
     private final JFileChooser fileChooser = new JFileChooser();
     private File current = null;
 
 
+    JPanel panel = new JPanel();
 
 
 
@@ -41,7 +45,6 @@ public class Editor extends JFrame{
 
         text.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
-        JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBorder(new EmptyBorder(5,5,5,5));
         panel.setBackground(Color.WHITE);
@@ -61,6 +64,9 @@ public class Editor extends JFrame{
         nuovo.setFont(f);
         save.setFont(f);
         open.setFont(f);
+        dark.setFont(f);
+        light.setFont(f);
+        sepia.setFont(f);
 
         open.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ev){
@@ -83,9 +89,17 @@ public class Editor extends JFrame{
             }
         });
 
+        light.addActionListener(e -> setLight());
+        dark.addActionListener(e -> setDark());
+        sepia.addActionListener(e -> setSepia());
+
         menuFile.add(nuovo);
         menuFile.add(save);
         menuFile.add(open);
+
+        menuEdit.add(light);
+        menuEdit.add(dark);
+        menuEdit.add(sepia);
 
         menu.add(menuFile);
         menu.add(menuEdit);
@@ -152,11 +166,40 @@ public class Editor extends JFrame{
 
     private void newFile(){
         if(this.current == null){
-            
+           text.setText(""); 
+           this.setTitle("Editor");
         }
         else{
             String message = "Salvare le modifiche per"+this.current.getAbsolutePath()+" ?";
             int result = JOptionPane.showConfirmDialog((Component) null,message,"Alert", JOptionPane.YES_NO_CANCEL_OPTION);
+            if(result == 0){
+                saveFile();
+                this.current = null;
+                newFile();
+            }
+            else if(result == 1){
+                this.current = null;
+                newFile();
+            }
         }
+    }
+
+    private void setLight(){
+       text.setBackground(Color.WHITE); 
+       text.setForeground(Color.BLACK);
+       panel.setBackground(Color.WHITE);
+    }
+
+    private void setDark(){
+        text.setBackground(Color.BLACK);
+        text.setForeground(Color.WHITE);
+        panel.setBackground(Color.BLACK);
+    }
+
+    private void setSepia(){
+        Color c = new Color(236,227,161);
+        text.setBackground(c);
+        text.setForeground(Color.darkGray);
+        panel.setBackground(c);
     }
 }
