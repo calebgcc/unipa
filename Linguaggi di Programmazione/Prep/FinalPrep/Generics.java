@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.IllegalFormatWidthException;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
+import java.util.List;
 
 // Esercitazione Generics
 
@@ -74,6 +72,9 @@ public class Generics{
 
         System.out.println(max(1,2));
         System.out.println(max('a','0'));
-        System.out.println(max(new Cane("bulldog"),new Cane("labrador")));
+        System.out.println(max(
+            new Cane("bulldog"),
+            new Cane("labrador")
+        ));
     }
 }
