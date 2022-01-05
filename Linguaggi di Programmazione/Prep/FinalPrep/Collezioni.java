@@ -1,5 +1,8 @@
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 // Una Struttura Dati Astratti (SDA) è una struttura dati definita 
 // solamente dal `cosa fa` invece di `come lo fa`
@@ -37,7 +40,7 @@ import java.util.LinkedHashSet;
 // invece che un genrics; Questo perchè al loro interno utilizzano equals()
 
 class Inutile{
-    public int a;
+    public Integer a;
     public Inutile(int a){this.a = a;}
     @Override
     public boolean equals(Object o){
@@ -78,8 +81,29 @@ public class Collezioni {
             System.out.print(" ;"+i);
         System.out.println("");
     }
+    // L'interfaccia *SotedSet mette a disposizione delle operazioni per set ordinati
+    // first() - last() // per prendere il primo e ultimo elemento
+    // subSet(start,end) // un intervallo [start,end) utilizzando come argomenti gli elementi
+    // headset(E) - tailSet(E) // elementi minori - maggiori/uguali di E
+    public static void testTreeSet(){ // Gli elementi E di un treeset devono estendere
+        SortedSet<Inutile> s = new TreeSet<>(new Comparator<Inutile>() { // Comparable<? super E>
+            @Override
+            public int compare(Inutile x, Inutile y){
+                return x.a.compareTo(y.a);
+            }
+        }); // oppure bisogna passare un comparator al costruttutore
+        s.add(new Inutile(1)); s.add(new Inutile(3));
+        s.add(new Inutile(4)); s.add(new Inutile(2)); s.add(new Inutile(5));
+        System.out.print("heaedset"+s.headSet(new Inutile(3))+ " ");
+        System.out.println("tailset"+s.tailSet(new Inutile(3)));
+    } 
+    // È spesso utile avere una vista immutabile di un insieme, questi metodi statici sono utili
+    // Collections.unmodifiableSet(Set<E> s) - Set.of(E... e) - Set.copyOf(Collections<E> c)
+
+
     public static void main(String[] args){
         testHashSet();
         testLinkedHashSet();
+        testTreeSet();
     }
 }
