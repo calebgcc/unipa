@@ -1,6 +1,8 @@
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -58,7 +60,7 @@ class Inutile{
 
 public class Collezioni {
 
-    //                       *  H A S H S E T  *
+    //                             *  S E T  *
     // Gli HashSet possono prendere a costruttutore i seguenti valori
     // (int capacity) - (int capacity, float loadFactor) - (Collection<? extends E> c)
     // la size di un hashset restituisce il numero di elementi che possiede
@@ -99,11 +101,40 @@ public class Collezioni {
     } 
     // È spesso utile avere una vista immutabile di un insieme, questi metodi statici sono utili
     // Collections.unmodifiableSet(Set<E> s) - Set.of(E... e) - Set.copyOf(Collections<E> c)
+    
+    // Parliamo di ~ I T E R A T O R I ~
+    // L'interfaccia *Iterable<T> è una sovrainterfaccia di Collection
+    // contiene un solo metodo Iterator<T> iterator()
+    // per implementare il metodo iterator() bisogna creare un oggetto che
+    // implementi l'interfaccia *Iterator<E>.
+    // *Iterator contiene i metodi next() - hasNext() - remove() [optional]
+    // si può usare il for esteso su ogni classe che implementa *Iterator
+    // [!] Quando bisogna rimuovere un elemento da una collezione, non usare il for esteso,
+    // usoa un iteratore manualmente.
+    public static void testIterator(){
+        Set<Character> set = new HashSet<>();
+        set.add('c'); set.add('a'); set.add('l'); set.add('e'); set.add('b');
+        Iterator<Character> i = set.iterator();
+        while(i.hasNext())
+            System.out.print(i.next()+" ");
+        System.out.println("");
+    }
+
+    //                             *  L I S T  *
+    // *List è una sottointerfaccia di Collection, implementa diversi nuovi metodi
+    // add(int index,E element) per inserire un elemento in una specifica posizione
+    // get(int index) per richiedere l'elemento alla i-esima posizione
+    // indexOf(Object o) restituisce il primo indice in cui si trova l'elemento, -1 se non c'è (esiste lastIndexOf())
+    // set(int index,E element) modifica un elemento ad una data posizione
+    // subList(int start,int end)
+    // Le liste hanno anche la particolarità di avere i listIterator() - listIterator(int index)
+    
 
 
     public static void main(String[] args){
         testHashSet();
         testLinkedHashSet();
         testTreeSet();
+        testIterator();
     }
 }
