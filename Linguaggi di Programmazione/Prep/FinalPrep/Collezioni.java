@@ -2,6 +2,9 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -122,19 +125,53 @@ public class Collezioni {
 
     //                             *  L I S T  *
     // *List è una sottointerfaccia di Collection, implementa diversi nuovi metodi
-    // add(int index,E element) per inserire un elemento in una specifica posizione
-    // get(int index) per richiedere l'elemento alla i-esima posizione
-    // indexOf(Object o) restituisce il primo indice in cui si trova l'elemento, -1 se non c'è (esiste lastIndexOf())
-    // set(int index,E element) modifica un elemento ad una data posizione
-    // subList(int start,int end)
+    // [] add(int index,E element) per inserire un elemento in una specifica posizione
+    // [] get(int index) per richiedere l'elemento alla i-esima posizione
+    // [] indexOf(Object o) restituisce il primo indice in cui si trova l'elemento, -1 se non c'è (esiste lastIndexOf())
+    // [] set(int index,E element) modifica un elemento ad una data posizione
+    // [] subList(int start,int end)
     // Le liste hanno anche la particolarità di avere i listIterator() - listIterator(int index)
-    
-
+    // I listIterator pssono andare avanti e indietro.
+    public static void testListIterator(){ // i listIterator partano dall'elemento i-esimo
+        List<Integer> list = new LinkedList<>(); // quando si esegue il next()
+        list.add(1); list.add(2); list.add(3); // e dall'elemento i-1 quando si esgue un previous()
+        ListIterator<Integer> it = list.listIterator(2); // ricorda che puoi eseguire remove() e set() 
+        while(it.hasPrevious()) // solo dopo avere richiamato un next() o un previous
+            System.out.print(it.previous()+", "); // stamperà 2, 1,
+        it = list.listIterator(0);
+        while(it.hasNext()){ // stamperà .1 .2 .3
+            System.out.print(" ."+it.next()); 
+            it.set(7);
+            it.add(3);
+        }
+        System.out.println(" "+list); // stampa [7,3,7,3,7,3]
+    }
+    // Gli ArrayList<E> sono un implementazione di *List
+    // come gli HashSet hanno una capacity (default 10) e un size;
+    // LinkedList<E> è un implementazione di *List
+    // altri ai metodi di list aggiunge:
+    // addFirst() - addLast()
+    // getFirst() - getLast()
+    // removeFirst() - removeLast()
+    // Se vogliamo possiamo avere una vista immutabile con:
+    // Collections.unmodifiableList(Collection<T> c) - List.of(E... e) - List.copyOf(List<E> l)
+    public static void testEliminaPari(){
+        List<Integer> list = new LinkedList<>();
+        list.add(1); list.add(2); list.add(4); list.add(7); list.add(8);
+        ListIterator<Integer> it = list.listIterator();
+        while(it.hasNext()){
+            if(it.next()%2==0)
+                it.remove();
+        }
+        System.out.println(list);
+    }
 
     public static void main(String[] args){
         testHashSet();
         testLinkedHashSet();
         testTreeSet();
         testIterator();
+        testListIterator();
+        testEliminaPari();
     }
 }
