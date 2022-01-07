@@ -1,10 +1,12 @@
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -165,6 +167,30 @@ public class Collezioni {
         }
         System.out.println(list);
     }
+
+    //                             *  M A P  *
+    // I diozionari, array-associativi o mappe sono una struttura dati astratta
+    // che rappresentano un'associazione tra un coppia chiave-valore;
+    // L'interfaccia Map<K,V> mette a disposizione le classiche operazione di un dizionario
+    // [] get(Object key)
+    // [] put(K key, V value)
+    // [] remove(K key) *optional
+    // [] containsKey(Object key) / conainsValue(Object value)
+    // [] putAll(Map<? extends K,? extends V> m)
+    // [] keySet() / entrySet() / values()
+    // Map.Entry<K,V> equivale al concetto C++ di pair
+    // permette di getKey() - getValue() - setValue() *optional
+    // 
+    // HashMap è un implementazione di *Map
+    // Di default ha una capacity 16 e un loadFactor di 0.75
+    // Come per HashSet esiste LinkedHashMap che permette di iterare seguendo l'ordine di inserimento
+    // L'interfaccia SortedMap<K,V> rappresenta un SDA in cui le chiavi sono ordinate
+    // vi sono operazioni aggiunte come 
+    // [] firstKey() / lastKey()
+    // [] headMap(K key) / tailMap(K key)
+    // [] subMap(K start, K end)
+    // TreeMap è un implementazione di *SortedMap
+    // le chiavi devono implementare Comparable o deve essere passato un comparatore al costruttore
 
     public static void main(String[] args){
         testHashSet();
