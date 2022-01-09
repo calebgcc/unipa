@@ -22,7 +22,7 @@ import java.util.TreeSet;
 /*
 
                                      Collections
-                    |_____________________|_____________________|
+                     _____________________|_____________________
                   *Set                  *List                *Map
               _______|_______             |                     |
              |               |            |_ LinkedList         |_ HashMap 
