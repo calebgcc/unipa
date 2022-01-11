@@ -1,10 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -20,7 +24,21 @@ public class Streams {
         try (Scanner scan = new Scanner(new File("Streams.java"))) {
             // utilizza [^\\w\\d'] tutto ciò che non è caratteri,numeri o apice
             Stream<String> stream = scan.useDelimiter("[^\\w\\d']").tokens();
-            stream.forEach(System.out::println);
+            Map<String,Integer> map =
+                stream.collect(
+                    Collectors.toMap(
+                        s -> s, // la parola è chiave
+                        s -> 1, // ad ogni chiave diamo il valore 1
+                        (e,r)->e+1 // ad ogni parola duplicata diamo valore e+1 // valore esistente +1
+                    )
+                );
+            int i = 0;
+            for(var pair : map.entrySet()){
+                System.out.print("["+pair.getKey()+"] = "+pair.getValue()+" ");
+                ++i;
+                if(i%3 == 0)
+                    System.out.println("");
+            }
         } catch (FileNotFoundException e) {
             System.out.println("[!] File non trovato :(");
         }
@@ -50,17 +68,44 @@ public class Streams {
         // reduce(identity, Bifunction<T,T>)
         // se lo stream è vuoto ritorna la identity, altrimenti ritorna un optional
 
-        System.out.println(
-            Stream.of(2,4,6).reduce(100,(a,b)->a+b)
-        );
-
-        Optional<Integer> opt = Stream.of(2,4,6).reduce((a,b)->a*b);
+        System.out.print(
+            Stream.of(2,4,6).reduce(0,(a,b)->a+b)
+        ); // identità per la somma è 0
+        System.out.print(" ");
+        Optional<Integer> opt = Stream.of(2,4,6).reduce((a,b)->a*b); // per il prodotto l'identità dovrebbe essere 1
         opt.ifPresent(new Consumer<Integer>() {
             @Override
             public void accept(Integer t) {
-                System.out.println(t);
+                System.out.print(t);
             }
         });
+        end();
+    }
+
+    // test 5
+    public static void t5(){ // data una stringa ottenere uno stream dei caratteri
+        String s = "ciao questa è una stringa";
+        Scanner scan = new Scanner(s);
+        System.out.println(
+            scan.useDelimiter("").tokens()
+            // .collect(Collectors.toList()); // salvare il risultato in una lista
+            .collect(Collectors.toCollection(LinkedList::new)) // a parametro un supplier ()->T 
+        );
+        scan.close();
+    }
+
+    // test 6
+    public static void t6(){
+        System.out.println(
+            IntStream.of(4,7,13,21,37,73,12)
+            .boxed() // occhio che i primitivi richiedono boxed prima di collect
+            .collect(Collectors.toMap(
+                i -> Integer.toBinaryString(i),
+                i -> i,
+                (e,r) -> e,
+                TreeMap::new // overloading che aggiugne un supplier () -> T
+            ))
+        );
     }
 
 
@@ -69,6 +114,8 @@ public class Streams {
         t2();
         t3();
         t4();
+        t5();
+        t6();
     }
 }
      
