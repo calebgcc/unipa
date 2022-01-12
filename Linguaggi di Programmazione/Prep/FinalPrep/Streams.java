@@ -1,10 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.function.Consumer;
@@ -24,21 +26,19 @@ public class Streams {
         try (Scanner scan = new Scanner(new File("Streams.java"))) {
             // utilizza [^\\w\\d'] tutto ciò che non è caratteri,numeri o apice
             Stream<String> stream = scan.useDelimiter("[^\\w\\d']").tokens();
-            Map<String,Integer> map =
+            Map<String,Long> map =
                 stream.collect(
                     Collectors.toMap(
                         s -> s, // la parola è chiave
-                        s -> 1, // ad ogni chiave diamo il valore 1
-                        (e,r)->e+1 // ad ogni parola duplicata diamo valore e+1 // valore esistente +1
+                        s -> 1L, // ad ogni chiave diamo il valore 1
+                        (e,r)->e+1L, // ad ogni parola duplicata diamo valore e+1 // valore esistente +1
+                        TreeMap::new
                     )
+                    //Collectors.groupingBy(s->s, Collectors.counting())
                 );
-            int i = 0;
-            for(var pair : map.entrySet()){
-                System.out.print("["+pair.getKey()+"] = "+pair.getValue()+" ");
-                ++i;
-                if(i%3 == 0)
-                    System.out.println("");
-            }
+            map.entrySet().stream()
+            .sorted(Comparator.comparing(e -> e.getValue(),Comparator.reverseOrder()))
+            .forEach(e -> System.out.println("["+e.getKey()+"] = "+e.getValue()));
         } catch (FileNotFoundException e) {
             System.out.println("[!] File non trovato :(");
         }
@@ -108,14 +108,27 @@ public class Streams {
         );
     }
 
+    // test 7
+    public static void t7(){
+        System.out.println(
+            (new Random()).ints(1,100)
+            .limit(1000)
+            .mapToObj(i -> (Integer)i)
+            .collect(Collectors.partitioningBy(
+                i -> i%2==0,
+                Collectors.counting() // downstream
+            ))
+        );
+    }
 
     public static void main(String[] args){
-        //t1();
+        t1();
         t2();
         t3();
         t4();
         t5();
         t6();
+        t7();
     }
 }
      
