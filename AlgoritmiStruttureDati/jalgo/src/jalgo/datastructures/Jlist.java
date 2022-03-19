@@ -1,5 +1,10 @@
 package jalgo.datastructures;
 
+// TODO add remove() method (iterator)
+// TODO add insert(T value) method (iterator)
+// TODO add Jlist(List<t> l) and Jlist(Object[] a)
+
+
 public class Jlist<T> {
 
     // class node for Jlist
@@ -89,6 +94,39 @@ public class Jlist<T> {
         tail.next = temp;
         tail = temp;
         size++;
+    }
+
+    // inserisce un nuovo nodo primo del nodo a posizione index
+    public void insert(int index,T value) throws IndexOutOfBoundsException{
+        if(index>=size || index<0)
+            throw new IndexOutOfBoundsException();
+
+        Node temp;
+        if(index == 0){
+            size++;
+            temp = new Node(value);
+            temp.next = head;
+            head.prev = temp;
+            head = temp;
+            return;
+        }
+        else if(index >= (size/2)){
+            temp = tail;
+            for(int i=size-1; i>index; --i)
+                temp = temp.prev;
+        }
+        else{
+            temp = head;
+            for(int i=0; i<index; ++i)
+                temp = temp.next;
+        }
+        // 1>3 1<3
+        size++;
+        Node novo = new Node(value); // 1>3 1<3 , 2 
+        (temp.prev).next = novo; // 1>2 1<3
+        novo.prev = temp.prev; // 1>2 1<2 1<3
+        novo.next = temp;  // 1>2 1<2 2>3 1<3
+        temp.prev = novo;// 1>2 1<2 2>3 2<3
     }
 
     public void remove(int index) throws IndexOutOfBoundsException{

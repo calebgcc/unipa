@@ -7,42 +7,44 @@ public class Main{
 
         Jlist<Integer> list = new Jlist<>();
         
-        for(int i=0;i<20;++i)
-            list.append(i);
+        list.append(1);
+        System.out.println(list);
+
+        list.insert(0,-1);
+        System.out.println(list);
+    
+
+        list.insert(1,0);
+        System.out.println(list);
+
+        list.append(2);
+        System.out.println(list);
+
+        list.insert(3,5);
+        System.out.println(list);
+
+        list.insert(2,6);
+        System.out.println(list);
+
+        list.append(7);
+        System.out.println(list);
+
+        list.insert(6,73);
+        list.insert(6,37);
+        System.out.println(list);
+
+        list.insert(0,44);
+        list.insert(9,42);
+        System.out.println(list);
+
 
         list.set(0);
-
-        for(int i=0; i<5; ++i){
-            System.out.print(list.get()+" ");
+        while(list.hasNext())
             list.next();
-            System.out.println(list.hasNext());
-        }
-
-        list.set(12);
-
-        for(int i=0; i<5; ++i){
-            System.out.print(list.get()+" ");
-            list.prev();
-            System.out.println(list.hasPrev());
-        }
-
-        list.set(0);
-        while(list.hasNext()){
-            System.out.print(list.get()+" ");
-            list.next();
-        }
         System.out.println(list.get());
-
-        while(list.hasPrev()){
-            System.out.print(list.get()+" ");
+        list.set(list.size()-1);
+        while(list.hasPrev())
             list.prev();
-        }
         System.out.println(list.get());
-
-        while(list.isSet()){
-            System.out.print(list.get()+" ");
-            list.next();
-        }
-
     }
 }
