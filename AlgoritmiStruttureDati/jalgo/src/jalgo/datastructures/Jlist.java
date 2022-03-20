@@ -1,7 +1,5 @@
 package jalgo.datastructures;
 
-// TODO add remove() method (iterator)
-// TODO add insert(T value) method (iterator)
 // TODO add Jlist(List<t> l) and Jlist(Object[] a)
 
 
@@ -77,6 +75,47 @@ public class Jlist<T> {
         if(iterator == null)
             throw new RuntimeException();
         return iterator.value;
+    }
+
+    public void remove() throws RuntimeException{
+        if(iterator == null)
+            throw new RuntimeException();
+        size--;
+        if(iterator == head){
+            head = head.next;
+            if(head != null)
+                head.prev = null;
+            iterator = head;
+        }
+        else if(iterator == tail){
+            tail = tail.prev;
+            tail.next = null;
+            iterator = null;
+        }
+        else{
+            (iterator.prev).next = iterator.next;
+            (iterator.next).prev = iterator.prev;
+            iterator = iterator.next;
+        }
+    }
+
+    public void insert(T value){
+        if(iterator == null)
+            throw new RuntimeException();
+        ++size;
+        if(iterator == tail){
+            tail.next = new Node(value);
+            (tail.next).prev = tail;
+            tail = tail.next;
+            tail.next = null;
+        }
+        else{
+            Node temp = new Node(value);
+            temp.prev = iterator;
+            temp.next = iterator.next;
+            (iterator.next).prev = temp;
+            iterator.next = temp;
+        }
     }
 
 
