@@ -1,2 +1,2 @@
-# Workspace
-Coding exercises
+# Code and exercises divided by courses
+TODO
