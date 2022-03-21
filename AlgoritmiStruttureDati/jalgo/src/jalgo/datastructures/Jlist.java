@@ -1,7 +1,6 @@
 package jalgo.datastructures;
 
-// TODO add Jlist(List<t> l) and Jlist(Object[] a)
-
+import java.util.List;
 
 public class Jlist<T> {
 
@@ -22,10 +21,24 @@ public class Jlist<T> {
     private int size;
 
     public Jlist(){
-        this.head = null;
-        this.tail = null;
-        this.iterator = null;
+        this.head = this.tail = this.iterator = null;
         this.size = 0;
+    }
+
+    public Jlist(List<T> list){
+        this.head = this.tail = this.iterator = null;
+        this.size = 0;
+
+        for(T value : list)
+            this.append(value);
+    }
+
+    public Jlist(T[] array){
+        this.head = this.tail = this.iterator = null;
+        this.size = 0;
+
+        for(T value : array)
+            this.append(value);
     }
 
     public void set(int index) throws IndexOutOfBoundsException{
