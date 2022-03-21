@@ -1,2 +1,2 @@
-# Code and exercises divided by courses
+# Codes and exercises divided by courses
 TODO
