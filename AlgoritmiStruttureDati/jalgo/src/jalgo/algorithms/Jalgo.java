@@ -113,4 +113,51 @@ public class Jalgo {
             arr[j+1] = temp;
         }
     }
+
+    /* B U B B L E  -  S O R T */
+    public static <T extends Comparable<? super T>> void bubbleSort(T[] arr){
+        bubbleSort(arr,false);
+    }
+
+    public static <T extends Comparable<? super T>> void bubbleSort(T[] arr, boolean descending){
+        boolean flag = true;
+        int reverse = descending ? -1:1;
+        int N = arr.length;
+        while(flag){
+            flag = false;
+            for(int i=0; i<N-1; ++i){
+                if(arr[i].compareTo(arr[i+1])*reverse > 0){
+                    T temp = arr[i+1];
+                    arr[i+1] = arr[i];
+                    arr[i] = temp;
+                    flag = true;
+                }
+            }
+            --N;
+        }
+    }
+
+    public static <T> void bubbleSort(T[] arr, Comparator<T> comp){
+        bubbleSort(arr,comp,false);
+    }
+
+    public static <T> void bubbleSort(T[] arr, Comparator<T> comp,boolean descending){
+        boolean flag = true;
+        int reverse = descending ? -1:1;
+        int N = arr.length;
+        while(flag){
+            flag = false;
+            for(int i=0; i<N-1; ++i){
+                if(comp.compare(arr[i],arr[i+1])*reverse > 0){
+                    T temp = arr[i+1];
+                    arr[i+1] = arr[i];
+                    arr[i] = temp;
+                    flag = true;
+                }
+            }
+            --N;
+        }
+    }
+
+
 }
