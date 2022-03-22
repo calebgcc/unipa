@@ -80,4 +80,37 @@ public class Jalgo {
             arr[min] = temp;
         }
     }
+
+    /* I N S E R T I O N  - S O R T*/
+    public static <T extends Comparable<? super T>> void insertionSort(T[] arr){
+        insertionSort(arr,false);
+    }
+
+    public static <T extends Comparable<? super T>> void insertionSort(T[] arr, boolean descending){
+        int j;
+        T temp;
+        int reverse = descending ? -1:1;
+        for(int i=1; i<arr.length; ++i){
+            temp = arr[i];
+            for(j=i-1;j>=0 && (arr[j].compareTo(temp)*reverse > 0);--j)
+                arr[j+1] = arr[j];
+            arr[j+1] = temp;
+        }
+    }
+
+    public static <T> void insertionSort(T[] arr, Comparator<T> comp){
+        insertionSort(arr,comp,false);
+    }
+
+    public static <T> void insertionSort(T[] arr, Comparator<T> comp, boolean descending){
+        int j;
+        T temp;
+        int reverse = descending ? -1:1;
+        for(int i=1; i<arr.length; ++i){
+            temp = arr[i];
+            for(j=i-1;j>=0 && (comp.compare(arr[j],temp)*reverse > 0);--j)
+                arr[j+1] = arr[j];
+            arr[j+1] = temp;
+        }
+    }
 }

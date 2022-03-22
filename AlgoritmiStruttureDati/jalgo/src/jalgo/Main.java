@@ -6,10 +6,10 @@ import jalgo.algorithms.Jalgo;
 public class Main{
     public static void main(String[] args){ 
 
-        Integer a[] = {1,2,3,4,5,6,7,8,9,0};
-        Jalgo.selectionSort(a,(p,q) -> p.compareTo(q),true);
+        Integer arr[] = {1,0,1,0,2,0,1,3,5,7};
+        Jalgo.insertionSort(arr,(a,b) -> a.compareTo(b));
         System.out.println(
-            Arrays.toString(a)
+            Arrays.toString(arr)
         );
     }
 }
