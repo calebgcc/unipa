@@ -1,43 +1,32 @@
 package jalgo;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import jalgo.algorithms.Jalgo;
 
 public class Main{
+
+    private static final int SIZE = 31;
+    private static final int MAX = 5;
+    private static final int MIN = -5;
+
     public static void main(String[] args){ 
 
-        final int SIZE = 100_000;
-
-        Double a[] = new Double[SIZE];
-        Double b[] = new Double[SIZE];
-        Double c[] = new Double[SIZE];
-
+        List<Integer> list = new ArrayList<>();
         Random generator = new Random();
-        final double MIN = -100_000;
-        final double MAX = 100_000;
+
+        for(int i=0;i<SIZE; ++i)
+            list.add(MIN + generator.nextInt(MAX-MIN));
         
-        for(int i=0; i<SIZE; ++i)
-            a[i] = b[i] = c[i] = MIN + (MAX-MIN)*generator.nextDouble();
+        Collections.shuffle(list);
 
-        Instant start,end;
+        Integer[] arr = list.stream().toArray(Integer[]::new);
 
-        start = Instant.now();
-        Jalgo.selectionSort(a);
-        end = Instant.now();
-        System.out.println("Selection Sort :: "+Duration.between(start, end).toString());
-
-        start = Instant.now();
-        Jalgo.insertionSort(b);
-        end = Instant.now();
-        System.out.println("Insertion Sort :: "+Duration.between(start, end).toString());
-
-        start = Instant.now();
-        Jalgo.bubbleSort(c);
-        end = Instant.now();
-        System.out.println("Bubble Sort :: "+Duration.between(start, end).toString());
-
+        Jalgo.heapSort(arr,true);
+        System.out.println(Arrays.toString(arr));
     }
 }
