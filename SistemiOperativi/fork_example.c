@@ -2,18 +2,11 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int fib(int n){
-    if(n == 0 || n == 1)
-        return n;
-    return fib(n-2)+fib(n-1);
-}
-
-
 int main(){
     pid_t pid;
     /* fork a child process */
     printf("** Test fork() syscall**\n");
-    pid = fork(); // the forked chil will start its execution starting from the very next instruction
+    pid = fork(); // the forked child will start its execution from the very next instruction
     printf("pid: %d\n",pid);
 
     if (pid < 0) { /* error occurred */
