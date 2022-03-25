@@ -1,20 +1,15 @@
 package jalgo;
 
-
-import java.util.Iterator;
-import java.util.List;
-
-import jalgo.datastructures.Jlist;
+import jalgo.datastructures.Jstack;
 
 public class Main{
-
-    public static void main(String[] args){ 
-
-        Jlist<String> l = new Jlist<>(List.of("calbe","caleb","foo","bar","buondì"));
-        
-        for(String s : l)
-            System.out.println(s);
-        
-
+    
+    public static void main(String[] args){
+        Jstack<Integer> stack = new Jstack<>();
+        for(int i=0; i<10; ++i){
+            stack.push(i);
+            System.out.println(stack.pop());
+        }
+        System.out.println(stack);
     }
 }
