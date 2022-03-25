@@ -17,7 +17,6 @@ public class Jlist<T> implements Iterable<T> {
     // class for iterator
     private class JlistIterator implements Iterator<T>{        
         private Node iterator;
-        private int index;
 
         public JlistIterator(){
             iterator = head;
@@ -25,14 +24,13 @@ public class Jlist<T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return index<size;
+            return (iterator==null) ? false:(iterator.next!=null);
         }
 
         @Override
         public T next() {
             T temp = iterator.value;
             iterator = iterator.next;
-            ++index;
             return temp;
         }
         
