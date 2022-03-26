@@ -21,7 +21,6 @@ int main(){
     }
     else { /* parent process */
         /* parent will wait for the child to complete */
-        return 0;
         int status;
         pid = wait(&status); // pid and status of the terminated child
         printf("Child complete, status:%d - pid:%d \n",status,pid);
