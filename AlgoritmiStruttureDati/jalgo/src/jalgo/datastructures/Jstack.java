@@ -12,11 +12,13 @@ public class Jstack<T> implements Iterable<T> {
     }
 
     public Jstack(List<T> list){
+        stack = new Jlist<>();
         for(T value : list)
             this.push(value);
     }
 
     public Jstack(T[] arr){
+        stack = new Jlist<>();
         for(T value : arr)
             this.push(value);
     }
