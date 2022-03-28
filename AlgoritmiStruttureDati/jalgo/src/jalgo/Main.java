@@ -1,27 +1,26 @@
 package jalgo;
 
-import java.util.List;
 
-import jalgo.datastructures.Jqueue;
-import jalgo.datastructures.Jstack;
+import java.util.Arrays;
+import java.util.Random;
+
+import jalgo.algorithms.Jalgo;
 
 public class Main{
     
     public static void main(String[] args){
-        Jqueue<String> coda = new Jqueue<>(List.of("a","b","c","d"));
-        Jstack<Integer> stack = new Jstack<>(new Integer[]{1,2,3,4,5,6,7,8,9,10}); 
+        int SIZE = 101;
+        Integer[] arr = new Integer[SIZE];
+        
+        for(int i=0; i<SIZE; ++i){
+            arr[i] = new Random().nextInt(100);
+            if(i%2 == 0)
+                arr[i]*=-1;
+        }
 
-        System.out.println(stack);
-        System.out.println(coda);
+        Jalgo.mergeSort(arr,(a,b)->a.compareTo(b),true);
 
-        while(!stack.isEmpty())
-            System.out.print(stack.pop()+" ");
+        System.out.println(Arrays.toString(arr));
 
-        System.out.println();
-
-        while(!coda.isEmpty())
-            System.out.print(coda.pop()+" ");
-
-        System.out.println();
     }
 }
