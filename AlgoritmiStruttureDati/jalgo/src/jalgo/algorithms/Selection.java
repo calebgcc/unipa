@@ -20,7 +20,7 @@ public class Selection {
         int reverse = descending ? -1:1;
         selectionSort(arr,(a,b)->comp.compare(a,b)*reverse); 
     }        
-    public static <T> void selectionSort(T[] arr, Comparator<T> comp){
+    private static <T> void selectionSort(T[] arr, Comparator<T> comp){
         for(int i=0; i<arr.length-1; ++i){
             int min = i;
             for(int j=i+1;j<arr.length; ++j)
