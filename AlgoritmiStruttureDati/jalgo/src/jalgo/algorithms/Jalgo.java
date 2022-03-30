@@ -46,41 +46,6 @@ public class Jalgo {
         return -1;
     } 
 
-    /* S E L E C T I O N  - S O R T  */
-    public static <T extends Comparable<? super T>> void selectionSort(T[] arr){
-        selectionSort(arr,false);
-    }
-      
-    public static <T extends Comparable<? super T>> void selectionSort(T[] arr, boolean descending){
-        int desc = descending ? -1:1;
-        for(int i=0; i<arr.length-1; ++i){
-            int min = i;
-            for(int j=i+1;j<arr.length; ++j)
-                min = (arr[min].compareTo(arr[j])*desc < 0) ? min:j;
-            // swap
-            T temp = arr[i];
-            arr[i] = arr[min];
-            arr[min] = temp;
-        }
-    }
-
-    public static <T> void selectionSort(T[] arr, Comparator<T> comp){
-        selectionSort(arr,comp,false);
-    }
-      
-    public static <T> void selectionSort(T[] arr, Comparator<T> comp, boolean descending){
-        int desc = descending ? -1:1;
-        for(int i=0; i<arr.length-1; ++i){
-            int min = i;
-            for(int j=i+1;j<arr.length; ++j)
-                min = (comp.compare(arr[min],arr[j])*desc < 0) ? min:j;
-            // swap
-            T temp = arr[i];
-            arr[i] = arr[min];
-            arr[min] = temp;
-        }
-    }
-
     /* I N S E R T I O N  - S O R T*/
     public static <T extends Comparable<? super T>> void insertionSort(T[] arr){
         insertionSort(arr,false);

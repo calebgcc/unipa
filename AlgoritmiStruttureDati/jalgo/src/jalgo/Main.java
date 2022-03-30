@@ -4,21 +4,18 @@ package jalgo;
 import java.util.Arrays;
 import java.util.Random;
 
-import jalgo.algorithms.Jalgo;
+import jalgo.algorithms.Selection;
 
 public class Main{
     
     public static void main(String[] args){
-        int SIZE = 101;
+        int SIZE = 30;
         Integer[] arr = new Integer[SIZE];
         
-        for(int i=0; i<SIZE; ++i){
+        for(int i=0; i<SIZE; ++i)
             arr[i] = new Random().nextInt(100);
-            if(i%2 == 0)
-                arr[i]*=-1;
-        }
-
-        Jalgo.mergeSort(arr,(a,b)->a.compareTo(b),true);
+        
+        Selection.sort(arr);
 
         System.out.println(Arrays.toString(arr));
 
