@@ -11,23 +11,31 @@ def is_pdf(M, double_checking=True):
             return is_pdf(M.T, False) if double_checking else False
     return True
 
-def jacobi(A,b,K=9):
+def jacobi(A,b,K=None):
     N = A.shape[0]
+    K = N**3 if K is None else K
     x = np.zeros(N) # solution
     t = np.zeros(N) # temp
 
     while K > 0: 
         for i in range(N):
-            S = 0
-            for j in range(N):
-                if i == j: continue
-                S += A[i][j]*t[j]
-            x[i] = 1/(A[i][i]) * (b[i] - S)
+            x[i] = 1/(A[i][i]) * (b[i] - (sum(A[i][j]*t[j] for j in range(N))-A[i][i]*t[i]))
         K -= 1
         t = np.array(x)
 
     return x
 
+def gauss_seidel(A,b,K=None):
+    N = A.shape[0]
+    K = N**3 if K is None else K
+    x = np.zeros(N) # solution
+    
+    while K > 0:
+        for i in range(N):
+            x[i] = 1/(A[i][i]) * (b[i] - (sum(A[i][j]*x[j] for j in range(N))-A[i][i]*x[i]))
+        K -= 1
+    
+    return x
 
 if __name__ == '__main__':
     
@@ -42,5 +50,7 @@ if __name__ == '__main__':
 
     print(is_pdf(A))
     x = jacobi(A,b)
-    print(f'{x.T=}')
+    print(f'JACOBI :: {x=}')
+    x = gauss_seidel(A,b)
+    print(f'GAUSS-SEIDEL :: {x=}')
     print(f'{A@x.T=}')
