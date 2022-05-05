@@ -24,7 +24,7 @@ public class Jlist<T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return (iterator==null) ? false:(iterator.next!=null);
+            return (iterator!=null); //? false:(iterator.next!=null);
         }
 
         @Override
