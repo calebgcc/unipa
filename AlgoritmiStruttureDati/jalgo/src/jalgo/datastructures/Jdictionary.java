@@ -88,17 +88,7 @@ public class Jdictionary<K,E> {
             this.put(p.key,p.value);
         }
     }
-
-    // TODO da togliere
-    public void log(){
-        System.out.println("***********");
-        for(Jlist<Jpair> l : table){
-            System.out.println(l);
-        }
-        System.out.println("***********");
-    }
-
-
+    
     @Override
     public String toString(){
         return "size: "+this.size+" capacity: "+this.capacity;
