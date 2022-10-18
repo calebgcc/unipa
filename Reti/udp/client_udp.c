@@ -8,7 +8,7 @@
 #include <arpa/inet.h> 
 #include <netinet/in.h> 
     
-#define PORT     8080 
+#define PORT 9973 
 #define MAXLINE 256 
     
 int main() {
@@ -47,7 +47,12 @@ int main() {
         sprintf(buffer,"%d", x-1);
         sendto(sockfd, (char *)buffer, strlen(buffer),  
             0, (const struct sockaddr *) &server_addr, 
-            sizeof(server_addr)); 
+            sizeof(server_addr));
+
+        if(x == 0){
+            printf("BOOOOM!!!!\n");
+            break;
+        } 
 
         n = recvfrom(sockfd, (char *)buffer, MAXLINE,  
                 MSG_WAITALL, ( struct sockaddr *) &server_addr, 
@@ -56,16 +61,11 @@ int main() {
         buffer[n] = '\0';
         x = atoi(buffer);
 
-        printf("Ricevuto dal server %s\n", buffer);
-
-        if(x == 0){
-            printf(" BOOOM!!!\n");
-            strcpy(buffer, "Client has exploded :(");
-            sendto(sockfd, (char *)buffer, strlen(buffer),  
-                0, (const struct sockaddr *) &server_addr, 
-                len);   
+        if(x == -1){
+            printf("Server has exploded :(\n");
             break;
-        }
+        } else
+            printf("Ricevuto dal server %s\n", buffer);
     }
 
     close(sockfd);
