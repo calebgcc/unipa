@@ -1,6 +1,6 @@
 function [output, palette]=img2gradient(img, show)
 
-    kernel = [-1 -2 -1; 0 0 0; 1 2 1]; % sobel operator
+    kernel = fspecial('sobel'); % sobel operator
     Dx = conv_generic(img, kernel);
     Dy = conv_generic(img, kernel');
     magnitude = sqrt(Dx.^2 + Dy.^2); % magnitude of the gradient
