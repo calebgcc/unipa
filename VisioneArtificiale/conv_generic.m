@@ -36,7 +36,7 @@ function output=conv_generic(img,kernel)
     end
     
     % convoluzione
-    for i=range
+    for i=range'
         acc = single(0);
         for k=(1:(size(kernel,1)*size(kernel,2)))
             acc = acc + prodmap(imm(i + lut(k))+1,k);
