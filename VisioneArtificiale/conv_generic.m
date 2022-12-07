@@ -1,5 +1,8 @@
 function output=conv_generic(img,kernel)
-    
+    % flip kernel sulle due assi per la convoluzione
+    kernel = flip(kernel, 1);
+    kernel = flip(kernel, 2);
+
     center = round(size(kernel)/2); % centro del kernel
 
     pva = center(1)-1; % padding vertical alto
@@ -16,7 +19,7 @@ function output=conv_generic(img,kernel)
         );
     imm(pva+1:size(img,1)+pva, pos+1:size(img,2)+pos) = ones(size(img));
     range = find(imm); % indici di dove si trovera' l'immagine
-    imm(pva+1:size(img,1)+pva, pos+1:size(img,2)+pos) = img;
+    imm(range) = img;
     temp = single(ones(size(imm)));
     H = size(imm, 1);
     W = size(imm, 2);
