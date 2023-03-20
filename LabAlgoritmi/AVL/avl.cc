@@ -104,7 +104,6 @@ AVL::NodePtr* AVL::search_helper(AVL::NodePtr* node, int key){
 
 std::optional<std::string> AVL::search(int key){ // public
   NodePtr* node = search_helper(&mroot, key);
-  rotate_helper(node, true);
   if(*node == nullptr) return {};
   return (*node)->v;
 }
