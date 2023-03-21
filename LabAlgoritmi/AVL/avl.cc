@@ -46,19 +46,14 @@ void AVL::balance_helper(AVL::NodePtr *node){
   if(bf > -2 && bf < 2) return;
 
   if(bf == 2){
-    if((*node)->lt->bf() == 1) rotate_helper(node, true);
-    else{
-      rotate_helper(&(*node)->lt, false);
-      rotate_helper(node, true);
-    }
+    if((*node)->lt->bf() == -1) rotate_helper(&(*node)->lt, false);
+    rotate_helper(node, true);
     return;
   }
 
-  if((*node)->rt->bf() == -1) rotate_helper(node, false);
-  else{
-    rotate_helper(&(*node)->rt, true);
-    rotate_helper(node, false);        
-  }
+  // if bf == -2:
+  if((*node)->rt->bf() == 1) rotate_helper(&(*node)->rt, true);
+  rotate_helper(node, false);        
 }
 
 
