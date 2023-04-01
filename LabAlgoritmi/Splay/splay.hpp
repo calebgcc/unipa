@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <deque>
 #include <vector>
+#include <cmath>
 
 template <class T>
 class Splay{
@@ -78,13 +79,13 @@ int Splay<T>::add_helper(Splay<T>::Node* &root, T val){
 
     if(val < root->val){
         int result = add_helper(root->left, val)-1;
-        if(result == 0){ // Zig Zag
+        if(result == 0){ // Zag Zig
             rotate_left(root->left);
             rotate_right(root);
             return 0;
         }
 
-        if(result == -2){ // Zig Zig
+        if(result == -2){ // Zag Zag
             rotate_right(root);
             rotate_right(root);
             return 0;
@@ -122,17 +123,48 @@ void Splay<T>::print(){
 template <class T>
 void Splay<T>::print_helper(Splay<T>::Node* root){
     std::deque<Splay<T>::Node *> queue;
-    std::vector<std::vector<T>> layers;
+    std::vector<std::vector<Splay<T>::Node*>> layers;
     queue.push_front(root);
-
-    while(not queue.empty()){
+    bool all_null = false;
+    while(not all_null){
         int size = queue.size();
 
-        std::vector<T> layer;
+        std::vector<Splay<T>::Node*> layer;
+        all_null = true;
         for(int i=0; i<size; ++i){
             Splay<T>::Node* temp = queue.back();
             queue.pop_back();
+
+            if(temp == nullptr){
+                queue.push_front(nullptr);
+                queue.push_front(nullptr);
+                layer.push_back(temp);
+                continue;
+            }
+
+            queue.push_front(temp->left);
+            queue.push_front(temp->right);
+            layer.push_back(temp);
+            all_null = false;
         }
+        layers.push_back(layer);
     }
+    layers.pop_back();
+
+    for(int i=0; i<layers.size(); ++i){
+        int liv = layers.size() - i;
+        int ispace = pow(2, liv-1)-1;
+        int mspace = pow(2, liv)-1;
+
+        // init space
+        for(int s=0; s < ispace; ++s) std::cout << " ";
+        for(auto& x : layers[i]){
+            if(x == nullptr) std::cout << "_";
+            else std::cout << x->val;
+            for(int s=0; s < mspace; ++s) std::cout << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "\n. . . . . . . . . . . . .\n\n";
 }
 
