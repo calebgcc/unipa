@@ -1,13 +1,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <limits.h>
+#define DEBUG
+
 
 template <class T>
 void print_vector(std::vector<T> &vec){
+    std::cout << "[ ";
     for(T& x : vec){
-        std::cout << x << "\n";
+        std::cout << "\"" << x << "\" ";
     }
+    std::cout << "]\n";
 }
 
 // stirng quick sort
@@ -50,11 +53,59 @@ std::vector<std::string> sqs(std::vector<std::string> vec, int l = 0){
     return lvec;
 }
 
-int main(){
-    std::vector<std::string> res;
 
-    res = msd({"zio", "zia", "nano", "nana", "nano", "cocco", ""});
-    
+// Helper Quicksort
+// vector, level, start, end
+void hsq(std::vector<std::string> &vec, int l, int s, int e){
+    // moving in-front all strings with len == l
+    int p = s;
+    for(int i=s; i<=e; ++i){
+        if(vec[i].size() == l){
+            swap(vec[i], vec[p]);
+            ++p;
+        }
+    }
+
+    // p is now pointing to the first string
+    // with len > l  --  this string is our pivot
+    if(p > e) return;
+
+    char pivot = vec[p][l];
+    int ls = p; // less then *
+    int gr = p+1; // greater then *
+
+    for(size_t c=p+1; c<=e; ++c){
+        
+        if(vec[c][l] == pivot){
+            swap(vec[c], vec[gr]);
+            ++gr;
+        }
+
+        if(vec[c][l] < pivot){
+            swap(vec[c], vec[ls]);
+            swap(vec[c], vec[gr]);
+            ++ls; ++gr;
+        }
+
+    }
+
+    hsq(vec,l,p,ls-1);    
+    hsq(vec,l+1,ls,gr-1);    
+    hsq(vec,l,gr,e);    
+}
+
+
+// in-place String Quicksort
+void sq(std::vector<std::string> &vec){
+   hsq(vec, 0, 0, vec.size()-1);
+}
+
+
+int main(){
+    std::vector<std::string> vec{"","c1", "aa","a1", "a2", "", "r2", "g4", "c2", "e1","e2" ,"b", "f", "a3", "c3"};
+    auto res = sqs(vec);
+    sq(vec);
+    print_vector(vec);
     print_vector(res);
     return 0;
 }
